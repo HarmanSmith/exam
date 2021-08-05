@@ -9,8 +9,16 @@ import pages.HomePage;
 
 public class FormTests1 extends BaseTests {
 
-    public void testSuccessfulDestination(){
-        homePage.clickGoingToButton();
+    private String destination = "LAX";
+    private String origin = "LAS";
+
+    @Test
+    public void setDestination(){
+        homePage.clickFlights();
+        homePage.clickDepartureButton();
+        homePage.typeDeparture(origin);
+        homePage.clickDestinationButton();
+        homePage.typeDestination(destination);
         //assertEquals
     }
 
