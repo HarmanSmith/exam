@@ -9,38 +9,55 @@ import java.util.concurrent.TimeUnit;
 public class HomePage {
     private WebDriver driver;
 
+    //Tabs
     private By flightsButton = By.xpath("//a[@href='?pwaLob=wizard-flight-pwa']");
-    private By departureBox = By.xpath("//button[@aria-label='Leaving from']");
-    private By destinationBox = By.xpath("//button[@aria-label='Going to']");
-    private By departureInput = By.xpath("//input[@data-stid='location-field-leg1-origin-dialog-input']");
-    private By destinationInput = By.xpath("//button[@aria-label='Going to']");
+    private By hotelButton = By.xpath("//a[@href='?pwaLob=wizard-hotel-pwa-v2']");
+    private By cruisesButton = By.xpath("//a[@href='?pwaLob=wizard-cruise-pwa']");
+
+    //Flights tab buttons
+    private By flightsRoundtripButton = By.xpath("//a[@href='?flightType=roundtrip']");
+    private By flightsDepartureBox = By.xpath("//button[@aria-label='Leaving from']");
+    private By flightsDestinationBox = By.xpath("//button[@aria-label='Going to']");
+    private By flightsDepartureInput = By.xpath("//input[@placeholder='Where are you leaving from?']");
+    private By flightsDestinationInput = By.xpath("//button[@aria-label='Going to']");
+    private By flightsAddHotel = By.id("add-hotel-checkbox");
+
+    //flight+hotel page missing?
 
     public HomePage(WebDriver driver){
         this.driver = driver;
     }
 
-    //waiting
-    public void wait1Second(){
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-    }
 
     //clicks
     public void clickFlights(){
         driver.findElement(flightsButton).click();
     }
+    public void clickHotels(){
+        driver.findElement(hotelButton).click();
+    }
+    public void clickCruises(){
+        driver.findElement(cruisesButton).click();
+    }
+    public void clickRoundtripButton(){
+        driver.findElement(flightsRoundtripButton).click();
+    }
     public void clickDepartureButton(){
-        driver.findElement(departureBox).click();
+        driver.findElement(flightsDepartureBox).click();
     }
     public void clickDestinationButton(){
-        driver.findElement(destinationBox).click();
+        driver.findElement(flightsDestinationBox).click();
+    }
+    public void clickAddHotel(){
+        driver.findElement(flightsAddHotel).click();
     }
 
     //typing
     public void typeDeparture(String departure){
-        driver.findElement(departureInput).sendKeys( departure + Keys.ENTER);
+        driver.findElement(flightsDepartureInput).sendKeys( departure + Keys.ENTER);
     }
     public void typeDestination(String destination){
-        driver.findElement(destinationInput).sendKeys( destination + Keys.ENTER);
+        driver.findElement(flightsDestinationInput).sendKeys( destination + Keys.ENTER);
     }
 
 }

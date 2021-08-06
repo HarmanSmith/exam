@@ -12,21 +12,50 @@ import pages.HomePage;
 public class BaseTests {
 
     private WebDriver driver;
-    private int width = 375;
-    private int height = 812;
     protected HomePage homePage;
+
+    //for screen size (phone is 375x812, pc is 1280x720)
+    private int width;
+    private int height;
+
+    public void setPhoneScreen(){
+        width = 375;
+        height = 812;
+        Dimension size = new Dimension(width, height);
+        driver.manage().window().setSize(size);
+    }
+    public void setLaptopScreen(){
+        width = 1280;
+        height = 720;
+        Dimension size = new Dimension(width, height);
+        driver.manage().window().setSize(size);
+    }
+
+    //for waiting
+    public void waitMethod(int seconds){
+        int milliseconds = seconds*1000;
+        try{
+            Thread.sleep(milliseconds);
+        }catch(Exception e){
+            System.out.println("Algo ocurrió intentando esperar");
+        }
+    }
+    //Setup testing
     @BeforeClass
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
         driver = new ChromeDriver();
+        //setPhoneScreen();
+        setLaptopScreen();
         driver.get("https://www.travelocity.com");
-        Dimension size = new Dimension(width, height);
-        //driver.manage().window().setSize(size); not needed
         homePage = new HomePage(driver);
-        //System.out.println(driver.getTitle()); not needed
+        System.out.println("Title: \"" + driver.getTitle() + "\"");
     }
     @AfterClass
     public void tearDown(){
-        //driver.quit();
+        //esperamos unos segundos para chequear la pagina antes de cerrar
+        System.out.println("Quitting");
+        waitMethod(5);
+        driver.quit();
     }
 }
