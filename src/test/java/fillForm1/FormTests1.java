@@ -23,4 +23,6 @@ public class FormTests1 extends BaseTests {
         //assertEquals
     }
 
+    //@Test// como hacer para ejercicio numero 2?
+
 }
