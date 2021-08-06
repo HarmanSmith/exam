@@ -1,13 +1,9 @@
-package fillForm1;
+package exercises;
 
 import base.BaseTests;
-import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.HomePage;
-import org.openqa.selenium.WebElement;
-import pages.HomePage;
 
-public class FormTests1 extends BaseTests {
+public class Exercise1 extends BaseTests {
 
     private String destination = "LLAX";
     private String origin = "LAS";
@@ -23,6 +19,5 @@ public class FormTests1 extends BaseTests {
         //assertEquals
     }
 
-    //@Test// como hacer para ejercicio numero 2?
 
 }
