@@ -16,6 +16,9 @@ public class Exercise1 extends BaseTests {
         homePage.typeDeparture(origin);
         homePage.clickDestinationButton();
         homePage.typeDestination(destination);
+        homePage.clickFlightsCalendarFrom();
+        waitMethod(1);
+        homePage.clickFlightsCalendarNextMonth();
         //assertEquals
     }
 

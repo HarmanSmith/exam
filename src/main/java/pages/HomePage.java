@@ -22,6 +22,11 @@ public class HomePage {
     private By flightsDestinationInput = By.xpath("//button[@aria-label='Going to']");
     private By flightsAddHotel = By.id("add-hotel-checkbox");
 
+    //Flights Calendar buttons
+    private By flightsCalendarFrom = By.id("d1-btn");
+    private By flightsCalendarTo = By.id("d2-btn");
+    private By flightsCalendarNextMonth = By.xpath("//button[@data-stid='date-picker-paging']"); //not working
+
     //flight+hotel page missing?
 
     public HomePage(WebDriver driver){
@@ -51,7 +56,15 @@ public class HomePage {
     public void clickAddHotel(){
         driver.findElement(flightsAddHotel).click();
     }
-
+    public void clickFlightsCalendarFrom(){
+        driver.findElement(flightsCalendarFrom).click();
+    }
+    public void clickFlightsCalendarTo(){
+        driver.findElement(flightsCalendarTo).click();
+    }
+    public void clickFlightsCalendarNextMonth(){
+        driver.findElement(flightsCalendarNextMonth).click();
+    }
     //typing
     public void typeDeparture(String departure){
         driver.findElement(flightsDepartureInput).sendKeys( departure + Keys.ENTER);
