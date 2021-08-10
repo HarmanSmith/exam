@@ -26,12 +26,15 @@ public class HomePage {
     private By flightsDepartureInput = By.xpath("//input[@placeholder='Where are you leaving from?']");
     private By flightsDestinationInput = By.xpath("//button[@aria-label='Going to']");
     private By flightsAddHotel = By.id("add-hotel-checkbox");
+    private By flightsSearch = By.cssSelector("[data-testid='submit-button']");
 
     //Flights Calendar buttons
     private By flightsCalendarFrom = By.id("d1-btn");
     private By flightsCalendarTo = By.id("d2-btn");
-    private By flightsCalendarNextMonth = By.xpath("(//div//button[contains(@data-stid,'date-picker-paging')])[2]"); //not working
-
+    private By flightsCalendarNextMonth = By.xpath("(//div//button[contains(@data-stid,'date-picker-paging')])[2]");
+    private By flightsCalendarDayStart = By.cssSelector("[data-day='1']");
+    private By flightsCalendarDayEnd = By.cssSelector("[data-day='7']");
+    private By flightsCalendarApply = By.xpath("(//div//button[contains(@data-stid,'apply-date-picker')])");
     //flight+hotel page missing?
 
 
@@ -66,6 +69,19 @@ public class HomePage {
     }
     public void clickFlightsCalendarNextMonth(){
         driver.findElement(flightsCalendarNextMonth).click();
+    }
+    public void clickFlightsCalendarDayStart() {
+        driver.findElement(flightsCalendarDayStart).click();
+    }
+    public void clickFlightsCalendarDayEnd() {
+        driver.findElement(flightsCalendarDayEnd).click();
+    }
+    public void clickFlightsCalendarApply(){
+        driver.findElement(flightsCalendarApply).click();
+    }
+    public FlightSearchPage clickFlightSearch(){
+        driver.findElement(flightsSearch).click();
+        return new FlightSearchPage(driver);
     }
     //typing
     public void typeDeparture(String departure){

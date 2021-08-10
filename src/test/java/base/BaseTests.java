@@ -31,6 +31,9 @@ public class BaseTests {
         driver.manage().window().setSize(size);
     }
 
+    public void setMaximizedScreen(){
+        driver.manage().window().maximize();
+    }
     //for waiting
     public void waitMethod(int seconds){
         int milliseconds = seconds*1000;
@@ -46,7 +49,7 @@ public class BaseTests {
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
         driver = new ChromeDriver();
         //setPhoneScreen();
-        setLaptopScreen();
+        setMaximizedScreen();
         driver.get("https://www.travelocity.com");
         homePage = new HomePage(driver);
         System.out.println("Title: \"" + driver.getTitle() + "\"");
