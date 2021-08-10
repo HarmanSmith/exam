@@ -7,7 +7,12 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 public class HomePage {
-    private WebDriver driver;
+    private WebDriver driver;//extends BasePage?
+
+    //constructor with inheritancy?
+    public HomePage(WebDriver driver){
+        this.driver = driver;
+    }
 
     //Tabs
     private By flightsButton = By.xpath("//a[@href='?pwaLob=wizard-flight-pwa']");
@@ -25,13 +30,10 @@ public class HomePage {
     //Flights Calendar buttons
     private By flightsCalendarFrom = By.id("d1-btn");
     private By flightsCalendarTo = By.id("d2-btn");
-    private By flightsCalendarNextMonth = By.xpath("//button[@data-stid='date-picker-paging']"); //not working
+    private By flightsCalendarNextMonth = By.xpath("(//div//button[contains(@data-stid,'date-picker-paging')])[2]"); //not working
 
     //flight+hotel page missing?
 
-    public HomePage(WebDriver driver){
-        this.driver = driver;
-    }
 
 
     //clicks
