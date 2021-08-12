@@ -41,6 +41,7 @@ public class BaseTests {
             Thread.sleep(milliseconds);
         }catch(Exception e){
             System.out.println("Algo ocurrió intentando esperar");
+            System.out.println("Algo ocurrió intentando esperar");
         }
     }
     //Setup testing
