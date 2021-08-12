@@ -11,7 +11,6 @@ public class FlightSearchPage extends BasePage{
 
     public FlightSearchPage(WebDriver driver){
         super(driver);
-        System.out.println("1");
     }
     //Dropdown
     @FindBy (id = "listings-sort")

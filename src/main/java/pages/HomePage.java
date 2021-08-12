@@ -114,7 +114,6 @@ public class HomePage extends BasePage {
     public FlightSearchPage clickFlightSearch(){
         //driver.findElement(flightsSearch).click();
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsSearch)).click();
-        System.out.println("useless");
         return new FlightSearchPage(driver);
     }
     //typing

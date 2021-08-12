@@ -41,7 +41,6 @@ public class BaseTests {
             Thread.sleep(milliseconds);
         }catch(Exception e){
             System.out.println("Algo ocurrió intentando esperar");
-            System.out.println("Algo ocurrió intentando esperar");
         }
     }
     //Setup testing
@@ -53,6 +52,7 @@ public class BaseTests {
         setMaximizedScreen();
         driver.get("https://www.travelocity.com");
         homePage = new HomePage(driver);
+        //CHECK for PAGE LOGO
         System.out.println("Title: \"" + driver.getTitle() + "\"");
     }
     @AfterClass

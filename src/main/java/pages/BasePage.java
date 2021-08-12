@@ -13,7 +13,6 @@ public abstract class BasePage {
         this.driver = driver;
         PageFactory.initElements(this.getDriver(), this);
         this.wait = new WebDriverWait(this.driver, 5);
-        System.out.println("uselesstext");
     }
 
     public WebDriver getDriver() {
