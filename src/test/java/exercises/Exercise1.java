@@ -21,9 +21,9 @@ public class Exercise1 extends BaseTests {
         homePage.clickDestinationButton();
         homePage.typeDestination(destination);
         homePage.clickFlightsCalendarFrom();
-        waitMethod(1);
+        //waitMethod(1);
         homePage.clickFlightsCalendarNextMonth();
-        waitMethod(1);
+        //waitMethod(1);
         homePage.clickFlightsCalendarNextMonth();
         homePage.clickFlightsCalendarDayStart();
         homePage.clickFlightsCalendarDayEnd();
@@ -31,7 +31,7 @@ public class Exercise1 extends BaseTests {
         FlightSearchPage flightSearchPage = homePage.clickFlightSearch();
         System.out.println(flightSearchPage.getDropdownText());
         assertTrue(flightSearchPage.getDropdownText().contains("Price (Lowest)"));
-
+        //Assert by checking first second and third flights are in order
     }
 
 

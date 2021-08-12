@@ -11,7 +11,7 @@ import pages.HomePage;
 
 public class BaseTests {
 
-    private WebDriver driver;
+    private static WebDriver driver;
     protected HomePage homePage;
 
     //for screen size (phone is 375x812, pc is 1280x720)
@@ -34,7 +34,7 @@ public class BaseTests {
     public void setMaximizedScreen(){
         driver.manage().window().maximize();
     }
-    //for waiting
+    //for manual waiting
     public void waitMethod(int seconds){
         int milliseconds = seconds*1000;
         try{
