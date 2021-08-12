@@ -28,8 +28,14 @@ public class Exercise1 extends BaseTests {
         homePage.clickFlightsCalendarDayStart();
         homePage.clickFlightsCalendarDayEnd();
         homePage.clickFlightsCalendarApply();
-        FlightSearchPage flightSearchPage = homePage.clickFlightSearch();
+        var flightSearchPage = homePage.clickFlightSearch();
         System.out.println(flightSearchPage.getDropdownText());
+        flightSearchPage.clickFirstResult();
+        System.out.println(flightSearchPage.getFlightPrice());
+        flightSearchPage.clickSecondResult();
+        System.out.println(flightSearchPage.getFlightPrice());
+        flightSearchPage.clickThirdResult();
+        System.out.println(flightSearchPage.getFlightPrice());
         assertTrue(flightSearchPage.getDropdownText().contains("Price (Lowest)"));
         //Assert by checking first second and third flights are in order!
     }
