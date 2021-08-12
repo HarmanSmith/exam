@@ -12,7 +12,7 @@ public class FlightSearchPage extends BasePage{
     public FlightSearchPage(WebDriver driver){
         super(driver);
     }
-
+    //Dropdown
     @FindBy (id = "listings-sort")
     WebElement sortDropdown;
     //private By sortDropdown = new By.ById("listings-sort");

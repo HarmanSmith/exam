@@ -16,7 +16,7 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    //Tabs
+    //Tabs clicks
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-flight-pwa']")
     WebElement flightsButton;
     @FindBy(xpath = "//a[@href='?pwaLob=wizard-hotel-pwa-v2']")

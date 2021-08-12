@@ -34,7 +34,7 @@ public class BaseTests {
     public void setMaximizedScreen(){
         driver.manage().window().maximize();
     }
-    //for manual waiting
+    //for manual waiting!
     public void waitMethod(int seconds){
         int milliseconds = seconds*1000;
         try{

@@ -31,7 +31,7 @@ public class Exercise1 extends BaseTests {
         FlightSearchPage flightSearchPage = homePage.clickFlightSearch();
         System.out.println(flightSearchPage.getDropdownText());
         assertTrue(flightSearchPage.getDropdownText().contains("Price (Lowest)"));
-        //Assert by checking first second and third flights are in order
+        //Assert by checking first second and third flights are in order!
     }
 
 

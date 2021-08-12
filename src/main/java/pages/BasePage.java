@@ -8,7 +8,7 @@ public abstract class BasePage {
 
     private WebDriver driver;
     private WebDriverWait wait;
-
+    //construct
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(this.getDriver(), this);
