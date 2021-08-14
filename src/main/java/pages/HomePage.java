@@ -7,11 +7,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
 public class HomePage extends BasePage {
-    private WebDriver driver;
     public HomePage(WebDriver driver){
         super(driver);
     }
@@ -112,9 +112,8 @@ public class HomePage extends BasePage {
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsCalendarApply)).click();
     }
     public FlightSearchPage clickFlightSearch(){
-        //driver.findElement(flightsSearch).click();
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsSearch)).click();
-        return new FlightSearchPage(driver);
+        return new FlightSearchPage(this.driver);
     }
     //typing
     public void typeDeparture(String departure){
@@ -123,7 +122,9 @@ public class HomePage extends BasePage {
     }
     public void typeDestination(String destination){
         //driver.findElement(flightsDestinationInput).sendKeys( destination + Keys.ENTER);
+
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsDestinationInput)).sendKeys(destination + Keys.ENTER);
+
     }
 
 }

@@ -3,13 +3,14 @@ package exercises;
 import base.BaseTests;
 import org.testng.annotations.Test;
 import pages.FlightSearchPage;
+import pages.HomePage;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class Exercise1 extends BaseTests {
 
-    private String destination = "LLAX";
+    private String destination = "のLAX";// Unicode ftw ;)
     private String origin = "LAS";
 
     @Test
@@ -28,7 +29,8 @@ public class Exercise1 extends BaseTests {
         homePage.clickFlightsCalendarDayStart();
         homePage.clickFlightsCalendarDayEnd();
         homePage.clickFlightsCalendarApply();
-        var flightSearchPage = homePage.clickFlightSearch();
+
+        FlightSearchPage flightSearchPage = homePage.clickFlightSearch();
         System.out.println(flightSearchPage.getDropdownText());
         flightSearchPage.clickFirstResult();
         System.out.println(flightSearchPage.getFlightPrice());
