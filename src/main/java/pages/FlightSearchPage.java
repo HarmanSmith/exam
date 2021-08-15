@@ -22,6 +22,10 @@ public class FlightSearchPage extends BasePage{
     WebElement secondResult;
     @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[3]")
     WebElement thirdResult;
+    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[4]")
+    WebElement fourthResult;
+    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[5]")
+    WebElement fifthResult;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[1]/div/div/span/div/section/span[1]")
     WebElement flightPrice;
 
@@ -41,7 +45,14 @@ public class FlightSearchPage extends BasePage{
     public void clickThirdResult(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.thirdResult)).click();
     }
+    public void clickFourthResult(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.fourthResult)).click();
+    }
+    public void clickFifthResult(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.fifthResult)).click();
+    }
     public String getFlightPrice(){
         return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice)).getText();
     }
+
 }
