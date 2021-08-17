@@ -1,11 +1,10 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Select;
 
 public class FlightSearchPage extends BasePage{
     public FlightSearchPage(WebDriver driver){
@@ -28,13 +27,24 @@ public class FlightSearchPage extends BasePage{
     WebElement fifthResult;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[1]/div/div/span/div/section/span[1]")
     WebElement flightPrice;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/button")
+    WebElement flightPriceAlt;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[1]/button")
+    WebElement closeFlightPanel;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
+    WebElement flightDuration;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
+    WebElement flightDurationAlternative;
 
     public String getDropdownText(){
         //return driver.findElement(sortDropdown).getText();
         return this.getWait().until(ExpectedConditions.elementToBeClickable(this.sortDropdown)).getText();
     }
-    public void clickDropdown(){
-        this.getWait().until(ExpectedConditions.elementToBeClickable(this.sortDropdown)).click();
+    public void selectDropdown(String option){
+        System.out.println("Checking first 5 elements: " + option);
+        Select dropdownelement = new Select(this.sortDropdown);
+        dropdownelement.selectByVisibleText(option);
+        //return new FlightSearchPage(this.driver);
     }
     public void clickFirstResult(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.firstResult)).click();
@@ -51,8 +61,33 @@ public class FlightSearchPage extends BasePage{
     public void clickFifthResult(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.fifthResult)).click();
     }
-    public String getFlightPrice(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice)).getText();
+
+    public void clickCloseFlightPanel(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
+    }
+
+    public String getFlightPrice(int setting){
+        switch(setting){
+            case 1:
+                //System.out.println("Entered Case 1");
+                return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice)).getText();
+            case 2:
+                //System.out.println("Entered Case 2");
+                String panelText = this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPriceAlt)).getText();
+                clickCloseFlightPanel();
+                //System.out.println(panelText);
+                return panelText;
+            default:
+                System.out.println("Missing getFlightPrice setting number");
+                return "Error";
+        }
+
+    }
+    public WebElement getFlightDuration(){
+        return this.flightDuration;
+    }
+    public WebElement getFlightDurationAlternative(){
+        return this.flightDurationAlternative;
     }
 
 }
