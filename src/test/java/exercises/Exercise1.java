@@ -82,16 +82,16 @@ public class Exercise1 extends BaseTests {
                         fifthInt = Integer.parseInt(m.group());
         }
         if(firstInt < secondInt){
-            System.out.println("Lowest ordered correct: first check pass");
+            System.out.println("Lowest ordered correct: passed on second first check");
             return true;
         }else if(secondInt < thirdInt){
-            System.out.println("Lowest ordered correct: second check pass");
+            System.out.println("Lowest ordered correct: passed on second check");
             return true;
         }else if(thirdInt < fourthInt){
-            System.out.println("Lowest ordered correct: third check pass");
+            System.out.println("Lowest ordered correct: passed on second third check");
             return true;
         }else if(fourthInt < fifthInt){
-            System.out.println("Lowest ordered correct: fourth check pass");
+            System.out.println("Lowest ordered correct: passed on second fourth check");
             return true;
         }
         System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
@@ -126,19 +126,19 @@ public class Exercise1 extends BaseTests {
         }
         if(firstInt > secondInt){
             //System.out.println("Numbers 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
-            System.out.println("Highest ordered correct: first check pass");
+            System.out.println("Highest ordered correct: passed on second first check");
             return true;
         }else if(secondInt > thirdInt){
             //System.out.println("Numbers 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
-            System.out.println("Highest ordered correct: second check pass");
+            System.out.println("Highest ordered correct: passed on second second check");
             return true;
         }else if(thirdInt > fourthInt){
             //System.out.println("Numbers 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
-            System.out.println("Highest ordered correct: third check pass");
+            System.out.println("Highest ordered correct: passed on second third check");
             return true;
         }else if(fourthInt > fifthInt){
             //System.out.println("Numbers 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
-            System.out.println("Highest ordered correct: fourth check pass");
+            System.out.println("Highest ordered correct: passed on second fourth check");
             return true;
         }
         System.out.println("Highest ordered incorrect: didn't pass. 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
@@ -181,7 +181,7 @@ public class Exercise1 extends BaseTests {
             flightSearchPage.clickFifthResult();
             contador = contador + durationAdd(flightSearchPage);
             if(contador >= 5){
-                System.out.println("Duration OK - Ordered Lowest");
+                System.out.println("Duration OK - 1");
                 return true;}
             else{return false;}
             case 2:
@@ -201,7 +201,7 @@ public class Exercise1 extends BaseTests {
                 contador = contador + durationAdd(flightSearchPage);
                 flightSearchPage.clickCloseFlightPanel(1);
                 if(contador >= 5){
-                    System.out.println("Duration OK - Ordered Highest");
+                    System.out.println("Duration OK - 2");
                     return true;}
                 else{return false;}
             default:
@@ -281,7 +281,7 @@ public class Exercise1 extends BaseTests {
                 contador = contador + baggageAdd(flightSearchPage);
                 flightSearchPage.clickCloseFlightPanel(1);
                 if (contador >= 5) {
-                    System.out.println("Baggage OK - Ordered lowest");
+                    System.out.println("Baggage OK - 1");
                     return true;
                 } else {
                     return false;
@@ -303,7 +303,7 @@ public class Exercise1 extends BaseTests {
                 contador = contador + baggageAddAlt(flightSearchPage);
                 flightSearchPage.clickCloseFlightPanel(1);
                 if (contador >= 5) {
-                    System.out.println("Baggage OK - Ordered Highest");
+                    System.out.println("Baggage OK - 2");
                     return true;
                 } else {
                     return false;
@@ -312,5 +312,5 @@ public class Exercise1 extends BaseTests {
                 return false;
         }
     }
-    
+
 }
