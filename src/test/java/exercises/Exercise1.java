@@ -41,14 +41,14 @@ public class Exercise1 extends BaseTests {
         System.out.println("Dropdown Elements: \n ----- \n" + flightSearchPage.getDropdownText()+"\n ------- ");//Imprimimos el dropdown
         flightSearchPage.selectDropdown("Price (Lowest)");
         assertTrue(checkDuration(flightSearchPage, 1));//Is duration field displayed?
-        assertTrue(checkSelectButton(flightSearchPage));
-        checkList(flightSearchPage, 1);
-        //OBSOLETE: assertTrue(flightSearchPage.getDropdownText().contains("Price (Lowest)"));
-        //Assert by checking first second and third flights are in order!
-        assertTrue(isOrderedLowest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));
+        assertTrue(checkSelectButton(flightSearchPage));//Is select button clickable?
+        assertTrue(checkBaggage(flightSearchPage, 1)); //Is baggage displayed?
+        checkList(flightSearchPage, 1);//Get variables
+        assertTrue(isOrderedLowest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));//Assert by checking first second and third flights are in order!
         flightSearchPage.selectDropdown("Price (Highest)");
         assertTrue(checkDuration(flightSearchPage, 2));
         assertTrue(checkSelectButton(flightSearchPage));
+        assertTrue(checkBaggage(flightSearchPage, 2));
         checkList(flightSearchPage, 2);
         assertTrue(isOrderedHighest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));
     }
@@ -145,22 +145,26 @@ public class Exercise1 extends BaseTests {
         return false;
     }
     private void checkList(FlightSearchPage flightSearchPage, int setting){
-        flightSearchPage.clickFirstResult();
-        this.firstResult = flightSearchPage.getFlightPrice(setting);
-        flightSearchPage.clickSecondResult();
-        this.secondResult = flightSearchPage.getFlightPrice(setting);
-        flightSearchPage.clickThirdResult();
-        this.thirdResult = flightSearchPage.getFlightPrice(setting);
-        flightSearchPage.clickFourthResult();
-        this.fourthResult = flightSearchPage.getFlightPrice(setting);
-        flightSearchPage.clickFifthResult();
-        this.fifthResult = flightSearchPage.getFlightPrice(setting);
-        //imprimimos resultados para ver que tal
-        /*System.out.println(this.firstResult);
-        System.out.println(this.secondResult);
-        System.out.println(this.thirdResult);
-        System.out.println(this.fourthResult);
-        System.out.println(this.fifthResult);*/
+                flightSearchPage.clickFirstResult();
+                this.firstResult = flightSearchPage.getFlightPrice(setting);
+                System.out.println(this.firstResult);
+                //flightSearchPage.clickCloseFlightPanel(setting);
+                flightSearchPage.clickSecondResult();
+                this.secondResult = flightSearchPage.getFlightPrice(setting);
+                System.out.println(this.secondResult);
+                //flightSearchPage.clickCloseFlightPanel(setting);
+                flightSearchPage.clickThirdResult();
+                this.thirdResult = flightSearchPage.getFlightPrice(setting);
+                System.out.println(this.thirdResult);
+                //flightSearchPage.clickCloseFlightPanel(setting);
+                flightSearchPage.clickFourthResult();
+                this.fourthResult = flightSearchPage.getFlightPrice(setting);
+                System.out.println(this.fourthResult);
+                //flightSearchPage.clickCloseFlightPanel(setting);
+                flightSearchPage.clickFifthResult();
+                this.fifthResult = flightSearchPage.getFlightPrice(setting);
+                System.out.println(this.fifthResult);
+                //flightSearchPage.clickCloseFlightPanel(setting);
     }
     private boolean checkDuration(FlightSearchPage flightSearchPage, int option){
         int contador = 0;
@@ -176,25 +180,29 @@ public class Exercise1 extends BaseTests {
             contador = contador + durationAdd(flightSearchPage);
             flightSearchPage.clickFifthResult();
             contador = contador + durationAdd(flightSearchPage);
-            if(contador >= 5){return true;}
+            if(contador >= 5){
+                System.out.println("Duration OK - Ordered Lowest");
+                return true;}
             else{return false;}
             case 2:
                 flightSearchPage.clickFirstResult();
                 contador = contador + durationAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel();
+                flightSearchPage.clickCloseFlightPanel(1);
                 flightSearchPage.clickSecondResult();
                 contador = contador + durationAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel();
+                flightSearchPage.clickCloseFlightPanel(1);
                 flightSearchPage.clickThirdResult();
                 contador = contador + durationAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel();
+                flightSearchPage.clickCloseFlightPanel(1);
                 flightSearchPage.clickFourthResult();
                 contador = contador + durationAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel();
+                flightSearchPage.clickCloseFlightPanel(1);
                 flightSearchPage.clickFifthResult();
                 contador = contador + durationAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel();
-                if(contador >= 5){return true;}
+                flightSearchPage.clickCloseFlightPanel(1);
+                if(contador >= 5){
+                    System.out.println("Duration OK - Ordered Highest");
+                    return true;}
                 else{return false;}
             default:
                 return false;
@@ -203,37 +211,106 @@ public class Exercise1 extends BaseTests {
     }
     private int durationAdd(FlightSearchPage flightSearchPage){
         //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
-        if(flightSearchPage.getFlightDuration().getText() != null){
+        if(flightSearchPage.getFlightDuration().isDisplayed()){
             return 1;
         }else{return 0;}
     }
     private int selectAdd(FlightSearchPage flightSearchPage){
         if(flightSearchPage.getFlightSelectButton().isDisplayed()){
-            System.out.println("Select button found");
+            //System.out.println("Select button found");
             return 1;
         }else{
-            System.out.println("select not found");
+            //System.out.println("select not found");
+            return 0;}
+    }
+    private int baggageAdd(FlightSearchPage flightSearchPage){
+        if(flightSearchPage.getFlightBaggageButton().isDisplayed()){
+            //System.out.println("Select button found");
+            return 1;
+        }else{
+            //System.out.println("select not found");
+            return 0;}
+    }
+    private int baggageAddAlt(FlightSearchPage flightSearchPage){
+        if(flightSearchPage.getFlightBaggageButtonAlt().isDisplayed()){
+            //System.out.println("Select button found");
+            return 1;
+        }else{
+            //System.out.println("select not found");
             return 0;}
     }
     private boolean checkSelectButton(FlightSearchPage flightSearchPage){
         int contador = 0;
         flightSearchPage.clickFirstResult();
         contador = contador + selectAdd(flightSearchPage);
-        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickCloseFlightPanel(1);
         flightSearchPage.clickSecondResult();
         contador = contador + selectAdd(flightSearchPage);
-        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickCloseFlightPanel(1);
         flightSearchPage.clickThirdResult();
         contador = contador + selectAdd(flightSearchPage);
-        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickCloseFlightPanel(1);
         flightSearchPage.clickFourthResult();
         contador = contador + selectAdd(flightSearchPage);
-        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickCloseFlightPanel(1);
         flightSearchPage.clickFifthResult();
         contador = contador + selectAdd(flightSearchPage);
-        flightSearchPage.clickCloseFlightPanel();
-        if(contador >= 5){return true;}
+        flightSearchPage.clickCloseFlightPanel(1);
+        if(contador >= 5){
+            System.out.println("Select Button OK");
+            return true;}
         else{return false;}
+    }
+    private boolean checkBaggage(FlightSearchPage flightSearchPage, int option){
+        int contador = 0;
+        switch(option) {
+            case 1:
+                flightSearchPage.clickFirstResult();
+                contador = contador + baggageAdd(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickSecondResult();
+                contador = contador + baggageAdd(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickThirdResult();
+                contador = contador + baggageAdd(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickFourthResult();
+                contador = contador + baggageAdd(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickFifthResult();
+                contador = contador + baggageAdd(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                if (contador >= 5) {
+                    System.out.println("Baggage OK - Ordered lowest");
+                    return true;
+                } else {
+                    return false;
+                }
+            case 2:
+                flightSearchPage.clickFirstResult();
+                contador = contador + baggageAddAlt(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickSecondResult();
+                contador = contador + baggageAddAlt(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickThirdResult();
+                contador = contador + baggageAddAlt(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickFourthResult();
+                contador = contador + baggageAddAlt(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                flightSearchPage.clickFifthResult();
+                contador = contador + baggageAddAlt(flightSearchPage);
+                flightSearchPage.clickCloseFlightPanel(1);
+                if (contador >= 5) {
+                    System.out.println("Baggage OK - Ordered Highest");
+                    return true;
+                } else {
+                    return false;
+                }
+            default:
+                return false;
+        }
     }
     /*private int durationAddAlternative(FlightSearchPage flightSearchPage){
         System.out.println("Duration text 2: " + flightSearchPage.getFlightDuration().getText());

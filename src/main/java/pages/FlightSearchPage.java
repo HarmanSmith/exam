@@ -31,12 +31,19 @@ public class FlightSearchPage extends BasePage{
     WebElement flightPriceAlt;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[1]/button")
     WebElement closeFlightPanel;
+    @FindBy (xpath= "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[1]/button/svg")
+    WebElement closeFlightPanelAlt;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
     WebElement flightDuration;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
     WebElement flightDurationAlternative;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/footer/div/button[1]")
     WebElement flightSelectButton;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[2]/table/tbody/tr[3]/td[2]")
+    WebElement flightBaggageButton;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/div/div[2]/table/tbody/tr[2]/td[2]/span/span")
+    WebElement flightBaggageButtonAlt;
+
 
     public String getDropdownText(){
         //return driver.findElement(sortDropdown).getText();
@@ -64,10 +71,18 @@ public class FlightSearchPage extends BasePage{
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.fifthResult)).click();
     }
 
-    public void clickCloseFlightPanel(){
-        this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
+    public void clickCloseFlightPanel(int setting){
+        switch(setting){
+            case 1:
+                this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
+                break;
+            case 2:
+                this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanelAlt)).click();
+                break;
+            default:
+                System.out.println("close error");
+        }
     }
-
     public String getFlightPrice(int setting){
         switch(setting){
             case 1:
@@ -76,7 +91,12 @@ public class FlightSearchPage extends BasePage{
             case 2:
                 //System.out.println("Entered Case 2");
                 String panelText = this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPriceAlt)).getText();
-                clickCloseFlightPanel();
+                /*try{
+                    Thread.sleep(1000);
+                }catch(Exception e){
+                    System.out.println("Algo ocurrió intentando esperar");
+                }*/
+                clickCloseFlightPanel(1);
                 //System.out.println(panelText);
                 return panelText;
             default:
@@ -86,10 +106,16 @@ public class FlightSearchPage extends BasePage{
 
     }
     public WebElement getFlightDuration(){
-        return this.flightDuration;
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
     }
     public WebElement getFlightSelectButton(){
         return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
+    }
+    public WebElement getFlightBaggageButton(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton));
+    }
+    public WebElement getFlightBaggageButtonAlt(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButtonAlt));
     }
     public WebElement getFlightDurationAlternative(){
         return this.flightDurationAlternative;
