@@ -147,23 +147,23 @@ public class Exercise1 extends BaseTests {
     private void checkList(FlightSearchPage flightSearchPage, int setting){
                 flightSearchPage.clickFirstResult();
                 this.firstResult = flightSearchPage.getFlightPrice(setting);
-                System.out.println(this.firstResult);
+                //System.out.println(this.firstResult);
                 //flightSearchPage.clickCloseFlightPanel(setting);
                 flightSearchPage.clickSecondResult();
                 this.secondResult = flightSearchPage.getFlightPrice(setting);
-                System.out.println(this.secondResult);
+                //System.out.println(this.secondResult);
                 //flightSearchPage.clickCloseFlightPanel(setting);
                 flightSearchPage.clickThirdResult();
                 this.thirdResult = flightSearchPage.getFlightPrice(setting);
-                System.out.println(this.thirdResult);
+                //System.out.println(this.thirdResult);
                 //flightSearchPage.clickCloseFlightPanel(setting);
                 flightSearchPage.clickFourthResult();
                 this.fourthResult = flightSearchPage.getFlightPrice(setting);
-                System.out.println(this.fourthResult);
+                //System.out.println(this.fourthResult);
                 //flightSearchPage.clickCloseFlightPanel(setting);
                 flightSearchPage.clickFifthResult();
                 this.fifthResult = flightSearchPage.getFlightPrice(setting);
-                System.out.println(this.fifthResult);
+                //System.out.println(this.fifthResult);
                 //flightSearchPage.clickCloseFlightPanel(setting);
     }
     private boolean checkDuration(FlightSearchPage flightSearchPage, int option){
@@ -312,10 +312,5 @@ public class Exercise1 extends BaseTests {
                 return false;
         }
     }
-    /*private int durationAddAlternative(FlightSearchPage flightSearchPage){
-        System.out.println("Duration text 2: " + flightSearchPage.getFlightDuration().getText());
-        if(flightSearchPage.getFlightDurationAlternative().getText() != null){
-            return 1;
-        }else{return 0;}
-    }*/
+    
 }
