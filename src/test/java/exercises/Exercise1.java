@@ -1,6 +1,7 @@
 package exercises;
 
 import base.BaseTests;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import pages.FlightSearchPage;
 import pages.HomePage;
@@ -40,12 +41,14 @@ public class Exercise1 extends BaseTests {
         System.out.println("Dropdown Elements: \n ----- \n" + flightSearchPage.getDropdownText()+"\n ------- ");//Imprimimos el dropdown
         flightSearchPage.selectDropdown("Price (Lowest)");
         assertTrue(checkDuration(flightSearchPage, 1));//Is duration field displayed?
+        assertTrue(checkSelectButton(flightSearchPage));
         checkList(flightSearchPage, 1);
         //OBSOLETE: assertTrue(flightSearchPage.getDropdownText().contains("Price (Lowest)"));
         //Assert by checking first second and third flights are in order!
         assertTrue(isOrderedLowest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));
         flightSearchPage.selectDropdown("Price (Highest)");
         assertTrue(checkDuration(flightSearchPage, 2));
+        assertTrue(checkSelectButton(flightSearchPage));
         checkList(flightSearchPage, 2);
         assertTrue(isOrderedHighest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));
     }
@@ -203,6 +206,34 @@ public class Exercise1 extends BaseTests {
         if(flightSearchPage.getFlightDuration().getText() != null){
             return 1;
         }else{return 0;}
+    }
+    private int selectAdd(FlightSearchPage flightSearchPage){
+        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
+            System.out.println("Select button found");
+            return 1;
+        }else{
+            System.out.println("select not found");
+            return 0;}
+    }
+    private boolean checkSelectButton(FlightSearchPage flightSearchPage){
+        int contador = 0;
+        flightSearchPage.clickFirstResult();
+        contador = contador + selectAdd(flightSearchPage);
+        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickSecondResult();
+        contador = contador + selectAdd(flightSearchPage);
+        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickThirdResult();
+        contador = contador + selectAdd(flightSearchPage);
+        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickFourthResult();
+        contador = contador + selectAdd(flightSearchPage);
+        flightSearchPage.clickCloseFlightPanel();
+        flightSearchPage.clickFifthResult();
+        contador = contador + selectAdd(flightSearchPage);
+        flightSearchPage.clickCloseFlightPanel();
+        if(contador >= 5){return true;}
+        else{return false;}
     }
     /*private int durationAddAlternative(FlightSearchPage flightSearchPage){
         System.out.println("Duration text 2: " + flightSearchPage.getFlightDuration().getText());

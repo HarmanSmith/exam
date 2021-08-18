@@ -35,6 +35,8 @@ public class FlightSearchPage extends BasePage{
     WebElement flightDuration;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
     WebElement flightDurationAlternative;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/footer/div/button[1]")
+    WebElement flightSelectButton;
 
     public String getDropdownText(){
         //return driver.findElement(sortDropdown).getText();
@@ -85,6 +87,9 @@ public class FlightSearchPage extends BasePage{
     }
     public WebElement getFlightDuration(){
         return this.flightDuration;
+    }
+    public WebElement getFlightSelectButton(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
     }
     public WebElement getFlightDurationAlternative(){
         return this.flightDurationAlternative;
