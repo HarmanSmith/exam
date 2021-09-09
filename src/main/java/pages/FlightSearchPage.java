@@ -17,25 +17,12 @@ public class FlightSearchPage extends BasePage{
     //Dropdown
     @FindBy (id = "listings-sort")
     WebElement sortDropdown;
-    //private By sortDropdown = new By.ById("listings-sort");
-    /*
-    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[1]")
-    WebElement firstResult;
-    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[2]")
-    WebElement secondResult;
-    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[3]")
-    WebElement thirdResult;
-    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[4]")
-    WebElement fourthResult;
-    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[5]")
-    WebElement fifthResult;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[1]/div/div/span/div/section/span[1]")
-    */
 
+    //LIST of elements:
     @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])")
     List<WebElement> flightResults;
 
-
+    // TODO: Improve XPATH QUALITY
     WebElement flightPrice;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/button")
     WebElement flightPriceAlt;
@@ -51,6 +38,7 @@ public class FlightSearchPage extends BasePage{
     WebElement flightSelectButton;
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[2]/table/tbody/tr[3]/td[2]")
     WebElement flightBaggageButton;
+    //todo why is ALT needed
     @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/div/div[2]/table/tbody/tr[2]/td[2]/span/span")
     WebElement flightBaggageButtonAlt;
 
@@ -66,7 +54,7 @@ public class FlightSearchPage extends BasePage{
         //return new FlightSearchPage(this.driver);
     }
 
-    //--------------RESULT LISTS
+    //--------------ACCESSING RESULT USING LIST
     public boolean clickResult(int index){
         this.getWait().until(ExpectedConditions.visibilityOfAllElements(this.flightResults));
         if(this.flightResults.size()>index){
@@ -89,7 +77,8 @@ public class FlightSearchPage extends BasePage{
                 System.out.println("close error");
         }
     }
-    public String getFlightPrice(int setting){
+// TODO: --------------- rehacer esta parte de precios
+    /*    public String getFlightPrice(int setting){
         switch(setting){
             case 1:
                 //System.out.println("Entered Case 1");
@@ -97,11 +86,6 @@ public class FlightSearchPage extends BasePage{
             case 2:
                 //System.out.println("Entered Case 2");
                 String panelText = this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPriceAlt)).getText();
-                /*try{
-                    Thread.sleep(1000);
-                }catch(Exception e){
-                    System.out.println("Algo ocurrió intentando esperar");
-                }*/
                 clickCloseFlightPanel(1);
                 //System.out.println(panelText);
                 return panelText;
@@ -110,7 +94,7 @@ public class FlightSearchPage extends BasePage{
                 return "Error";
         }
 
-    }
+    }*/
     public WebElement getFlightDuration(){
         return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
     }
@@ -120,9 +104,10 @@ public class FlightSearchPage extends BasePage{
     public WebElement getFlightBaggageButton(){
         return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton));
     }
-    public WebElement getFlightBaggageButtonAlt(){
+    //TODO Alt versions shouldnt exist
+    /*public WebElement getFlightBaggageButtonAlt(){
         return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButtonAlt));
-    }
+    }*/
 
 
     //----------------------------METHODS
@@ -217,7 +202,7 @@ public class FlightSearchPage extends BasePage{
         return false;
     }
 
-    //FIX
+    //TODO: FIX
     private void checkList(FlightSearchPage flightSearchPage, int setting){
         flightSearchPage.clickResult(1);
         this.firstResult(flightSearchPage.getFlightPrice(setting));
@@ -227,7 +212,7 @@ public class FlightSearchPage extends BasePage{
         this.secondResult = flightSearchPage.getFlightPrice(setting);
         //System.out.println(this.secondResult);
         //flightSearchPage.clickCloseFlightPanel(setting);
-        flightSearchPage.clickresult(3);
+        flightSearchPage.clickResult(3);
         this.thirdResult = flightSearchPage.getFlightPrice(setting);
         //System.out.println(this.thirdResult);
         //flightSearchPage.clickCloseFlightPanel(setting);
@@ -253,8 +238,8 @@ public class FlightSearchPage extends BasePage{
         System.out.println("Duration OK - 1");
         return true;}else {
             return false;
-            }
         }
+
 
     }
     private int durationAdd(FlightSearchPage flightSearchPage){
@@ -279,78 +264,60 @@ public class FlightSearchPage extends BasePage{
             //System.out.println("select not found");
             return 0;}
     }
-    private int baggageAddAlt(FlightSearchPage flightSearchPage){
-        if(flightSearchPage.getFlightBaggageButtonAlt().isDisplayed()){
-            //System.out.println("Select button found");
-            return 1;
-        }else{
-            //System.out.println("select not found");
-            return 0;}
-    }
+
     private boolean checkSelectButton(FlightSearchPage flightSearchPage){
         int contador = 0;
         for(int i = 1; i < flightResults.size(); i++){
             flightSearchPage.clickResult(i);
             contador = contador + selectAdd(flightSearchPage);
         }
-        if(contador >= 5){
+        if(contador >= 5)
+        {
             System.out.println("Select Button OK");
-            return true;}
+            return true;
+        }
         else{return false;}
     }
     private boolean checkBaggage(FlightSearchPage flightSearchPage, int option){
         int contador = 0;
-        switch(option) {
-            case 1:
-                flightSearchPage.clickFirstResult();
-                contador = contador + baggageAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickSecondResult();
-                contador = contador + baggageAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickThirdResult();
-                contador = contador + baggageAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickFourthResult();
-                contador = contador + baggageAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickFifthResult();
-                contador = contador + baggageAdd(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                if (contador >= 5) {
-                    System.out.println("Baggage OK - 1");
-                    return true;
-                } else {
-                    return false;
-                }
-            case 2:
-                flightSearchPage.clickFirstResult();
-                contador = contador + baggageAddAlt(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickSecondResult();
-                contador = contador + baggageAddAlt(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickThirdResult();
-                contador = contador + baggageAddAlt(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickFourthResult();
-                contador = contador + baggageAddAlt(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                flightSearchPage.clickFifthResult();
-                contador = contador + baggageAddAlt(flightSearchPage);
-                flightSearchPage.clickCloseFlightPanel(1);
-                if (contador >= 5) {
-                    System.out.println("Baggage OK - 2");
-                    return true;
-                } else {
-                    return false;
-                }
-            default:
+        /*switch(option) {
+            case 1:*/
+        for(int i = 1; i < flightResults.size(); i++) {
+            flightSearchPage.clickResult(i);
+            contador = contador + baggageAdd(flightSearchPage);
+        }
+        if (contador >= 5)
+        {
+                System.out.println("Baggage OK - 2");
+                return true;
+        } else
+        {
                 return false;
         }
     }
+}
 
-    /*public WebElement getFlightDurationAlternative(){return this.flightDurationAlternative;}*/
+
+
+
+//-----------------------------OLD code
+
+//private By sortDropdown = new By.ById("listings-sort");
+    /*
+    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[1]")
+    WebElement firstResult;
+    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[2]")
+    WebElement secondResult;
+    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[3]")
+    WebElement thirdResult;
+    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[4]")
+    WebElement fourthResult;
+    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[5]")
+    WebElement fifthResult;
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[1]/div/div/span/div/section/span[1]")
+    */
+
+/*public WebElement getFlightDurationAlternative(){return this.flightDurationAlternative;}*/
 
 
     /*
@@ -369,4 +336,11 @@ public class FlightSearchPage extends BasePage{
     public void clickFifthResult(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.fifthResult)).click();
     }*/
-}
+/*    private int baggageAddAlt(FlightSearchPage flightSearchPage){
+        if(flightSearchPage.getFlightBaggageButtonAlt().isDisplayed()){
+            //System.out.println("Select button found");
+            return 1;
+        }else{
+            //System.out.println("select not found");
+            return 0;}
+    }*/
