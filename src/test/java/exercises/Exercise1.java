@@ -13,11 +13,6 @@ public class Exercise1 extends BaseTests {
 
     private String destination = "のLAX";// Unicode ftw ;)
     private String origin = "LAS";
-    private String firstResult = " ";
-    private String secondResult = " ";
-    private String thirdResult = " ";
-    private String fourthResult = " ";
-    private String fifthResult = " ";
 
     @Test
     public void setDestination(){
@@ -43,14 +38,14 @@ public class Exercise1 extends BaseTests {
         assertTrue(flightSearchPage.checkDuration(flightSearchPage));//Is duration field displayed?
         assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));//Is select button clickable?
         assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 1)); //Is baggage displayed?
-        flightSearchPage.checkList(flightSearchPage, 1);//Get variables
-        assertTrue(flightSearchPage.isOrderedLowest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));//Assert by checking first second and third flights are in order!
+        flightSearchPage.checkList(flightSearchPage);//Get variables
+        assertTrue(flightSearchPage.isOrderedLowest());//Assert by checking first second and third flights are in order!
         flightSearchPage.selectDropdown("Price (Highest)");
         assertTrue(flightSearchPage.checkDuration(flightSearchPage));
         assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));
         assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 2));
-        flightSearchPage.checkList(flightSearchPage, 2);
-        assertTrue(flightSearchPage.isOrderedHighest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));
+        flightSearchPage.checkList(flightSearchPage);
+        assertTrue(flightSearchPage.isOrderedHighest());
     }
 
 }
