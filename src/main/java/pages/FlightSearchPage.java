@@ -14,33 +14,24 @@ public class FlightSearchPage extends BasePage{
     public FlightSearchPage(WebDriver driver){
         super(driver);
     }
-    //Dropdown
+
+    //Optimized Xpath
     @FindBy (id = "listings-sort")
     WebElement sortDropdown;
-
-    //LIST of elements:
-    @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])")
+    @FindBy (xpath = "(//button[contains(@class,'uitk-card-link')])")
     List<WebElement> flightResults;
 
-    // TODO: Improve XPATH QUALITY
-    WebElement flightPrice;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/button")
-    WebElement flightPriceAlt;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[1]/button")
+    @FindBy (xpath = "//button[@data-test-id='fare-type-select']")
+    List<WebElement> flightPrice;
+    @FindBy (xpath = "//button[@data-icon='tool-close']")
     WebElement closeFlightPanel;
-    @FindBy (xpath= "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[1]/button/svg")
-    WebElement closeFlightPanelAlt;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
+    @FindBy (xpath = "//h3[@class='uitk-heading-7 uitk-flex-item']")
     WebElement flightDuration;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
-    WebElement flightDurationAlternative;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/footer/div/button[1]")
+    @FindBy (xpath = "//button[@data-test-id='select-button']")
     WebElement flightSelectButton;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[2]/table/tbody/tr[3]/td[2]")
-    WebElement flightBaggageButton;
-    //todo why is ALT needed
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/div/div[2]/table/tbody/tr[2]/td[2]/span/span")
-    WebElement flightBaggageButtonAlt;
+    @FindBy (xpath = "//td[@class='uitk-table-react-cell uitk-spacing uitk-spacing-padding-blockstart-three uitk-table-react-cell-border-none uitk-table-react-cell-textalign-right uitk-table-react-cell-verticalalign-top']//span[@class='uitk-text uitk-type-300']")
+    List<WebElement> flightBaggageButton;
+
 
 
     public String getDropdownText(){
@@ -65,17 +56,8 @@ public class FlightSearchPage extends BasePage{
         }
     }
 
-    public void clickCloseFlightPanel(int setting){
-        switch(setting){
-            case 1:
-                this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
-                break;
-            case 2:
-                this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanelAlt)).click();
-                break;
-            default:
-                System.out.println("close error");
-        }
+    public void clickCloseFlightPanel(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
     }
 // TODO: --------------- rehacer esta parte de precios
     /*    public String getFlightPrice(int setting){
@@ -101,13 +83,9 @@ public class FlightSearchPage extends BasePage{
     public WebElement getFlightSelectButton(){
         return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
     }
-    public WebElement getFlightBaggageButton(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton));
+    public WebElement getFlightBaggageButton(int index){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton.get(index)));
     }
-    //TODO Alt versions shouldnt exist
-    /*public WebElement getFlightBaggageButtonAlt(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButtonAlt));
-    }*/
 
 
     //----------------------------METHODS
@@ -304,6 +282,18 @@ public class FlightSearchPage extends BasePage{
 
 //private By sortDropdown = new By.ById("listings-sort");
     /*
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/button")
+    WebElement flightPriceAlt;
+
+    @FindBy (xpath= "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[1]/button/svg")
+    WebElement closeFlightPanelAlt;
+
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div[1]/section/main/div[6]/section/div[2]/div/div[2]/div[1]/h3")
+    WebElement flightDurationAlternative;
+
+    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li[1]/div/div/div[2]/table/tbody/tr[2]/td[2]/span/span")
+    WebElement flightBaggageButtonAlt;
+
     @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[1]")
     WebElement firstResult;
     @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[2]")
@@ -314,7 +304,7 @@ public class FlightSearchPage extends BasePage{
     WebElement fourthResult;
     @FindBy (xpath = "(//div//div//div//button[contains(@class,'uitk-card-link')])[5]")
     WebElement fifthResult;
-    @FindBy (xpath = "//*[@id='app-layer-base']/div[2]/div[3]/div/section/main/div[6]/section/div[2]/div/div[3]/div[3]/div/div/ul/li/div/div/div[1]/div/div/span/div/section/span[1]")
+
     */
 
 /*public WebElement getFlightDurationAlternative(){return this.flightDurationAlternative;}*/
