@@ -56,7 +56,7 @@ public class FlightSearchPage extends BasePage{
         }
     }
 
-    public void clickCloseFlightPanel(){
+    private void clickCloseFlightPanel(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
     }
 // TODO: --------------- rehacer esta parte de precios
@@ -77,19 +77,15 @@ public class FlightSearchPage extends BasePage{
         }
 
     }*/
-    public WebElement getFlightDuration(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
-    }
+
     public WebElement getFlightSelectButton(){
         return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
     }
-    public WebElement getFlightBaggageButton(int index){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton.get(index)));
-    }
+
 
 
     //----------------------------METHODS
-    private boolean isOrderedLowest(String first, String second, String third, String fourth, String fifth){
+    public boolean isOrderedLowest(String first, String second, String third, String fourth, String fifth){
         int firstInt = 0;
         int secondInt = 0;
         int thirdInt = 0;
@@ -132,7 +128,7 @@ public class FlightSearchPage extends BasePage{
         System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
         return false;
     }
-    private boolean isOrderedHighest(String first, String second, String third, String fourth, String fifth){
+    public boolean isOrderedHighest(String first, String second, String third, String fourth, String fifth){
         int firstInt = 0;
         int secondInt = 0;
         int thirdInt = 0;
@@ -181,7 +177,7 @@ public class FlightSearchPage extends BasePage{
     }
 
     //TODO: FIX
-    private void checkList(FlightSearchPage flightSearchPage, int setting){
+    public void checkList(FlightSearchPage flightSearchPage, int setting){
         flightSearchPage.clickResult(1);
         this.firstResult(flightSearchPage.getFlightPrice(setting));
         //System.out.println(this.firstResult);
@@ -203,7 +199,7 @@ public class FlightSearchPage extends BasePage{
         //System.out.println(this.fifthResult);
         //flightSearchPage.clickCloseFlightPanel(setting);
     }
-    private boolean checkDuration(FlightSearchPage flightSearchPage){
+    public boolean checkDuration(FlightSearchPage flightSearchPage){
         int contador = 0;
         /*switch(option){
             case 1:*/
@@ -217,14 +213,15 @@ public class FlightSearchPage extends BasePage{
         return true;}else {
             return false;
         }
-
-
     }
     private int durationAdd(FlightSearchPage flightSearchPage){
         //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
         if(flightSearchPage.getFlightDuration().isDisplayed()){
             return 1;
         }else{return 0;}
+    }
+    private WebElement getFlightDuration(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
     }
     private int selectAdd(FlightSearchPage flightSearchPage){
         if(flightSearchPage.getFlightSelectButton().isDisplayed()){
@@ -234,16 +231,9 @@ public class FlightSearchPage extends BasePage{
             //System.out.println("select not found");
             return 0;}
     }
-    private int baggageAdd(FlightSearchPage flightSearchPage){
-        if(flightSearchPage.getFlightBaggageButton().isDisplayed()){
-            //System.out.println("Select button found");
-            return 1;
-        }else{
-            //System.out.println("select not found");
-            return 0;}
-    }
 
-    private boolean checkSelectButton(FlightSearchPage flightSearchPage){
+
+    public boolean checkSelectButton(FlightSearchPage flightSearchPage){
         int contador = 0;
         for(int i = 1; i < flightResults.size(); i++){
             flightSearchPage.clickResult(i);
@@ -256,13 +246,13 @@ public class FlightSearchPage extends BasePage{
         }
         else{return false;}
     }
-    private boolean checkBaggage(FlightSearchPage flightSearchPage, int option){
+    public boolean checkBaggage(FlightSearchPage flightSearchPage, int option){
         int contador = 0;
         /*switch(option) {
             case 1:*/
         for(int i = 1; i < flightResults.size(); i++) {
             flightSearchPage.clickResult(i);
-            contador = contador + baggageAdd(flightSearchPage);
+            contador = contador + baggageAdd(flightSearchPage, 1); //only checks first baggage option
         }
         if (contador >= 5)
         {
@@ -272,6 +262,17 @@ public class FlightSearchPage extends BasePage{
         {
                 return false;
         }
+    }
+    private int baggageAdd(FlightSearchPage flightSearchPage, int index){
+        if(flightSearchPage.getFlightBaggageButton(index).isDisplayed()){
+            //System.out.println("Select button found");
+            return 1;
+        }else{
+            //System.out.println("select not found");
+            return 0;}
+    }
+    private WebElement getFlightBaggageButton(int index){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton.get(index)));
     }
 }
 

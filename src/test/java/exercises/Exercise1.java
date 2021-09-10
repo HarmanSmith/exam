@@ -40,17 +40,17 @@ public class Exercise1 extends BaseTests {
 
         System.out.println("Dropdown Elements: \n ----- \n" + flightSearchPage.getDropdownText()+"\n ------- ");//Imprimimos el dropdown
         flightSearchPage.selectDropdown("Price (Lowest)");
-        assertTrue(checkDuration(flightSearchPage, 1));//Is duration field displayed?
-        assertTrue(checkSelectButton(flightSearchPage));//Is select button clickable?
-        assertTrue(checkBaggage(flightSearchPage, 1)); //Is baggage displayed?
-        checkList(flightSearchPage, 1);//Get variables
-        assertTrue(isOrderedLowest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));//Assert by checking first second and third flights are in order!
+        assertTrue(flightSearchPage.checkDuration(flightSearchPage));//Is duration field displayed?
+        assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));//Is select button clickable?
+        assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 1)); //Is baggage displayed?
+        flightSearchPage.checkList(flightSearchPage, 1);//Get variables
+        assertTrue(flightSearchPage.isOrderedLowest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));//Assert by checking first second and third flights are in order!
         flightSearchPage.selectDropdown("Price (Highest)");
-        assertTrue(checkDuration(flightSearchPage, 2));
-        assertTrue(checkSelectButton(flightSearchPage));
-        assertTrue(checkBaggage(flightSearchPage, 2));
-        checkList(flightSearchPage, 2);
-        assertTrue(isOrderedHighest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));
+        assertTrue(flightSearchPage.checkDuration(flightSearchPage));
+        assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));
+        assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 2));
+        flightSearchPage.checkList(flightSearchPage, 2);
+        assertTrue(flightSearchPage.isOrderedHighest(firstResult, secondResult, thirdResult, fourthResult, fifthResult));
     }
 
 }
