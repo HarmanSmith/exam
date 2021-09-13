@@ -39,19 +39,7 @@ public class FlightSearchPage extends BasePage{
     List<WebElement> flightBaggageButton;
 
 
-
-    public String getDropdownText(){
-        //return driver.findElement(sortDropdown).getText();
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.sortDropdown)).getText();
-    }
-    public void selectDropdown(String option){
-        System.out.println("Checking first 5 elements: " + option);
-        Select dropdownelement = new Select(this.sortDropdown);
-        dropdownelement.selectByVisibleText(option);
-        //return new FlightSearchPage(this.driver);
-    }
-
-    //--------------ACCESSING RESULT USING LIST
+    //--------------accessing result using list
     public boolean clickResult(int index){
         this.getWait().until(ExpectedConditions.visibilityOfAllElements(this.flightResults));
         if(this.flightResults.size()>index){
@@ -62,117 +50,15 @@ public class FlightSearchPage extends BasePage{
         }
     }
 
-    private void clickCloseFlightPanel(){
-        this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
+    public String getDropdownText(){
+        //return driver.findElement(sortDropdown).getText();
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.sortDropdown)).getText();
     }
-
-    public String getFlightPrice(int index){
-        //System.out.println("Entered Case 1");
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice.get(index))).getText();
-    }
-
-    public WebElement getFlightSelectButton(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
-    }
-
-    public boolean isOrderedLowest(){
-        int firstInt = 0;
-        String first = " ";
-        int secondInt = 0;
-        String second = " ";
-        int thirdInt = 0;
-        String third = " ";
-        int fourthInt = 0;
-        String fourth = " ";
-        int fifthInt = 0;
-        String fifth = " ";
-        //Parse STRINGS with $ symbols into INT variables
-        Pattern p = Pattern.compile("\\d+");
-        //pasamos el primer string al matcher m
-        Matcher m = p.matcher(first);
-        while(m.find()) {
-            //lo guardamos como INT
-            firstInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(second);
-        while(m.find()) {
-            secondInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(third);
-        while(m.find()) {
-            thirdInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fourth);
-        while(m.find()) {
-            fourthInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fifth);
-        while(m.find()) {
-            fifthInt = Integer.parseInt(m.group());
-        }
-        if(firstInt < secondInt){
-            System.out.println("Lowest ordered correct: passed on second first check");
-            return true;
-        }else if(secondInt < thirdInt){
-            System.out.println("Lowest ordered correct: passed on second check");
-            return true;
-        }else if(thirdInt < fourthInt){
-            System.out.println("Lowest ordered correct: passed on second third check");
-            return true;
-        }else if(fourthInt < fifthInt){
-            System.out.println("Lowest ordered correct: passed on second fourth check");
-            return true;
-        }
-        System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
-        return false;
-    }
-    public boolean isOrderedHighest(){
-        int firstInt = 0;
-        String first = " ";
-        int secondInt = 0;
-        String second = " ";
-        int thirdInt = 0;
-        String third = " ";
-        int fourthInt = 0;
-        String fourth = " ";
-        int fifthInt = 0;
-        String fifth = " ";
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(first);
-        while(m.find()) {
-            firstInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(second);
-        while(m.find()) {
-            secondInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(third);
-        while(m.find()) {
-            thirdInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fourth);
-        while(m.find()) {
-            fourthInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fifth);
-        while(m.find()) {
-            fifthInt = Integer.parseInt(m.group());
-        }
-        if(firstInt > secondInt){
-            System.out.println("Highest ordered correct: passed on second first check");
-            return true;
-        }else if(secondInt > thirdInt){
-            System.out.println("Highest ordered correct: passed on second second check");
-            return true;
-        }else if(thirdInt > fourthInt){
-            System.out.println("Highest ordered correct: passed on second third check");
-            return true;
-        }else if(fourthInt > fifthInt){
-            System.out.println("Highest ordered correct: passed on second fourth check");
-            return true;
-        }
-        System.out.println("Highest ordered incorrect: didn't pass. 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
-        return false;
+    public void selectDropdown(String option){
+        System.out.println("Checking first 5 elements: " + option);
+        Select dropdownelement = new Select(this.sortDropdown);
+        dropdownelement.selectByVisibleText(option);
+        //return new FlightSearchPage(this.driver);
     }
 
     //TODO: CHECK IF WORKS
@@ -198,6 +84,140 @@ public class FlightSearchPage extends BasePage{
         System.out.println(this.fifthResult);
         flightSearchPage.clickCloseFlightPanel();
     }
+
+    private void clickCloseFlightPanel(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
+    }
+
+    //TODO: ¿are variables firstResult~etc already initialized by the time this code is run?
+    public boolean checkOrderedLowest(){
+        int firstInt = 0;
+        int secondInt= 0;
+        int thirdInt = 0;
+        int fourthInt = 0;
+        int fifthInt = 0;
+        /*-Retrieve prices from each result-*/
+        this.clickResult(1);
+        this.firstResult = this.getFlightPrice(1);
+        System.out.println(this.firstResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(2);
+        this.secondResult = this.getFlightPrice(2);
+        System.out.println(this.secondResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(3);
+        this.thirdResult = this.getFlightPrice(3);
+        System.out.println(this.thirdResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(4);
+        this.fourthResult = this.getFlightPrice(4);
+        System.out.println(this.fourthResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(5);
+        this.fifthResult = this.getFlightPrice(5);
+        System.out.println(this.fifthResult);
+        this.clickCloseFlightPanel();
+        Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
+        Matcher m = p.matcher(this.firstResult);//pasamos el primer string al matcher m
+        while(m.find()) {
+            firstInt = Integer.parseInt(m.group());//lo guardamos como INT
+        }
+        m = p.matcher(this.secondResult);
+        while(m.find()) {
+            secondInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(this.thirdResult);
+        while(m.find()) {
+            thirdInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(this.fourthResult);
+        while(m.find()) {
+            fourthInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(this.fifthResult);
+        while(m.find()) {
+            fifthInt = Integer.parseInt(m.group());
+        }
+        if(firstInt < secondInt){
+            System.out.println("Lowest ordered correct: passed on second first check");
+            return true;
+        }else if(secondInt < thirdInt){
+            System.out.println("Lowest ordered correct: passed on second check");
+            return true;
+        }else if(thirdInt < fourthInt){
+            System.out.println("Lowest ordered correct: passed on second third check");
+            return true;
+        }else if(fourthInt < fifthInt){
+            System.out.println("Lowest ordered correct: passed on second fourth check");
+            return true;
+        }
+        System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
+        return false;
+    }
+    public boolean checkOrderedHighest(){
+        int firstInt = 0;
+        int secondInt= 0;
+        int thirdInt = 0;
+        int fourthInt = 0;
+        int fifthInt = 0;
+        this.clickResult(1);
+        this.firstResult = this.getFlightPrice(1);
+        System.out.println(this.firstResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(2);
+        this.secondResult = this.getFlightPrice(2);
+        System.out.println(this.secondResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(3);
+        this.thirdResult = this.getFlightPrice(3);
+        System.out.println(this.thirdResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(4);
+        this.fourthResult = this.getFlightPrice(4);
+        System.out.println(this.fourthResult);
+        this.clickCloseFlightPanel();
+        this.clickResult(5);
+        this.fifthResult = this.getFlightPrice(5);
+        System.out.println(this.fifthResult);
+        this.clickCloseFlightPanel();
+        Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
+        Matcher m = p.matcher(this.firstResult);//pasamos el primer string al matcher m
+        while(m.find()) {
+            firstInt = Integer.parseInt(m.group());//lo guardamos como INT
+        }
+        m = p.matcher(this.secondResult);
+        while(m.find()) {
+            secondInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(this.thirdResult);
+        while(m.find()) {
+            thirdInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(this.fourthResult);
+        while(m.find()) {
+            fourthInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(this.fifthResult);
+        while(m.find()) {
+            fifthInt = Integer.parseInt(m.group());
+        }
+        if(firstInt > secondInt){
+            System.out.println("Lowest ordered correct: passed on second first check");
+            return true;
+        }else if(secondInt > thirdInt){
+            System.out.println("Lowest ordered correct: passed on second check");
+            return true;
+        }else if(thirdInt > fourthInt){
+            System.out.println("Lowest ordered correct: passed on second third check");
+            return true;
+        }else if(fourthInt > fifthInt){
+            System.out.println("Lowest ordered correct: passed on second fourth check");
+            return true;
+        }
+        System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
+        return false;
+    }
+
     public boolean checkDuration(FlightSearchPage flightSearchPage){
         int contador = 0;
         for(int i = 1; i < 7; i++){
@@ -211,24 +231,6 @@ public class FlightSearchPage extends BasePage{
             return false;
         }
     }
-    private int durationAdd(FlightSearchPage flightSearchPage){
-        //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
-        if(flightSearchPage.getFlightDuration().isDisplayed()){
-            return 1;
-        }else{return 0;}
-    }
-    private WebElement getFlightDuration(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
-    }
-    private int selectAdd(FlightSearchPage flightSearchPage){
-        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
-            //System.out.println("Select button found");
-            return 1;
-        }else{
-            //System.out.println("select not found");
-            return 0;}
-    }
-
 
     public boolean checkSelectButton(FlightSearchPage flightSearchPage){
         int contador = 0;
@@ -243,16 +245,43 @@ public class FlightSearchPage extends BasePage{
     }
     public boolean checkBaggage(FlightSearchPage flightSearchPage, int option){
         int contador = 0;
-        /*switch(option) {
-            case 1:*/
         for(int i = 1; i < 7; i++) {
             flightSearchPage.clickResult(i);
-            contador = contador + baggageAdd(flightSearchPage, 1); //only checks first baggage option
+            contador = contador + baggageAdd(flightSearchPage, 1); //todo: for now; only checks first baggage
         }
         if (contador >= 5)
         {System.out.println("Baggage OK - 2");
             return true;
         } else {return false;}
+    }
+    private String getFlightPrice(int index){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice.get(index))).getText();
+    }
+
+    private WebElement getFlightBaggageButton(int index){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton.get(index)));
+    }
+    private WebElement getFlightSelectButton(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
+    }
+
+    private WebElement getFlightDuration(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
+    }
+
+    private int durationAdd(FlightSearchPage flightSearchPage){
+        //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
+        if(flightSearchPage.getFlightDuration().isDisplayed()){
+            return 1;
+        }else{return 0;}
+    }
+    private int selectAdd(FlightSearchPage flightSearchPage){
+        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
+            //System.out.println("Select button found");
+            return 1;
+        }else{
+            //System.out.println("select not found");
+            return 0;}
     }
     private int baggageAdd(FlightSearchPage flightSearchPage, int index){
         if(flightSearchPage.getFlightBaggageButton(index).isDisplayed()){
@@ -262,15 +291,12 @@ public class FlightSearchPage extends BasePage{
             //select not found
             return 0;}
     }
-    private WebElement getFlightBaggageButton(int index){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton.get(index)));
-    }
 }
 
 
 
 //----------------------------------------------------------------------------------------------------------------------
-//-----------------------------OLD code
+//-----------------------------OLD code---------------------------------------------------------------------------------
 
 //private By sortDropdown = new By.ById("listings-sort");
     /*
@@ -326,4 +352,110 @@ public class FlightSearchPage extends BasePage{
             //System.out.println("select not found");
             return 0;}
     }*/
+
+/*public boolean isOrderedLowest(){
+        int firstInt = 0;
+        String first = this.flightResults.get(1).getText();
+        int secondInt = 0;
+        String second = this.flightResults.get(2).getText();
+        int thirdInt = 0;
+        String third = this.flightResults.get(3).getText();
+        int fourthInt = 0;
+        String fourth = this.flightResults.get(4).getText();
+        int fifthInt = 0;
+        String fifth = this.flightResults.get(5).getText();
+        //Parse STRINGS with $ symbols into INT variables
+        Pattern p = Pattern.compile("\\d+");
+        //pasamos el primer string al matcher m
+        Matcher m = p.matcher(first);
+        while(m.find()) {
+            //lo guardamos como INT
+            firstInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(second);
+        while(m.find()) {
+            secondInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(third);
+        while(m.find()) {
+            thirdInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(fourth);
+        while(m.find()) {
+            fourthInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(fifth);
+        while(m.find()) {
+            fifthInt = Integer.parseInt(m.group());
+        }
+        if(firstInt < secondInt){
+            System.out.println("Lowest ordered correct: passed on second first check");
+            return true;
+        }else if(secondInt < thirdInt){
+            System.out.println("Lowest ordered correct: passed on second check");
+            return true;
+        }else if(thirdInt < fourthInt){
+            System.out.println("Lowest ordered correct: passed on second third check");
+            return true;
+        }else if(fourthInt < fifthInt){
+            System.out.println("Lowest ordered correct: passed on second fourth check");
+            return true;
+        }
+        System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
+        return false;
+    }
+    public boolean isOrderedHighest(){
+        int firstInt = 0;
+        String first = this.flightResults.get(1).getText();
+        int secondInt = 0;
+        String second = this.flightResults.get(2).getText();
+        int thirdInt = 0;
+        String third = this.flightResults.get(3).getText();
+        int fourthInt = 0;
+        String fourth = this.flightResults.get(4).getText();
+        int fifthInt = 0;
+        String fifth = this.flightResults.get(5).getText();
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(first);
+        while(m.find()) {
+            firstInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(second);
+        while(m.find()) {
+            secondInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(third);
+        while(m.find()) {
+            thirdInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(fourth);
+        while(m.find()) {
+            fourthInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(fifth);
+        while(m.find()) {
+            fifthInt = Integer.parseInt(m.group());
+        }
+        if(firstInt > secondInt){
+            System.out.println("Highest ordered correct: passed on second first check");
+            return true;
+        }else if(secondInt > thirdInt){
+            System.out.println("Highest ordered correct: passed on second second check");
+            return true;
+        }else if(thirdInt > fourthInt){
+            System.out.println("Highest ordered correct: passed on second third check");
+            return true;
+        }else if(fourthInt > fifthInt){
+            System.out.println("Highest ordered correct: passed on second fourth check");
+            return true;
+        }
+        System.out.println("Highest ordered incorrect: didn't pass. 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
+        return false;
+    }*/
+
+// REGEX extract info from .getText() example below:
+    /*Select and show fare information for JetBlue Airways flight, departing at 1:08pm from Las Vegas, arriving at 2:15pm
+     in Los Angeles, Priced at $91 Roundtrip per traveler.  1 hour 7 minutes total travel time, Nonstop, 2 cleaning and
+     safety practice.*/
+
 //----------------------------------------------------------------------------------------------------------------------
