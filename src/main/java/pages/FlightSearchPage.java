@@ -21,7 +21,6 @@ public class FlightSearchPage extends BasePage{
     private String fourthResult = " ";
     private String fifthResult = " ";
 
-    //Optimized Xpath
     @FindBy (id = "listings-sort")
     WebElement sortDropdown;
     @FindBy (xpath = "(//button[contains(@class,'uitk-card-link')])")
@@ -39,7 +38,13 @@ public class FlightSearchPage extends BasePage{
     List<WebElement> flightBaggageButton;
 
 
-    //--------------accessing result using list
+    /*---------------Interactions with website-------------------*/
+    public void selectDropdown(String option){
+        System.out.println("Option: " + option);
+        Select dropdownelement = new Select(this.sortDropdown);
+        dropdownelement.selectByVisibleText(option);
+        //return new FlightSearchPage(this.driver);
+    }
     public boolean clickResult(int index){
         this.getWait().until(ExpectedConditions.visibilityOfAllElements(this.flightResults));
         if(this.flightResults.size()>index){
@@ -49,17 +54,55 @@ public class FlightSearchPage extends BasePage{
             return false;
         }
     }
+    private void clickCloseFlightPanel(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
+    }
 
+    /*-----------------Retrieve info---------------------*/
     public String getDropdownText(){
         //return driver.findElement(sortDropdown).getText();
         return this.getWait().until(ExpectedConditions.elementToBeClickable(this.sortDropdown)).getText();
     }
-    public void selectDropdown(String option){
-        System.out.println("Checking first 5 elements: " + option);
-        Select dropdownelement = new Select(this.sortDropdown);
-        dropdownelement.selectByVisibleText(option);
-        //return new FlightSearchPage(this.driver);
+    private String getFlightPrice(int index){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice.get(index))).getText();
     }
+
+    private WebElement getFlightBaggageButton(int index){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton.get(index)));
+    }
+    private WebElement getFlightSelectButton(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
+    }
+
+    private WebElement getFlightDuration(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
+    }
+
+    /*---------Private utility methods---------------*/
+    private int durationAdd(FlightSearchPage flightSearchPage){
+        //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
+        if(flightSearchPage.getFlightDuration().isDisplayed()){
+            return 1;
+        }else{return 0;}
+    }
+    private int selectAdd(FlightSearchPage flightSearchPage){
+        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
+            //System.out.println("Select button found");
+            return 1;
+        }else{
+            //System.out.println("select not found");
+            return 0;}
+    }
+    private int baggageAdd(FlightSearchPage flightSearchPage, int index){
+        if(flightSearchPage.getFlightBaggageButton(index).isDisplayed()){
+            //Select button found
+            return 1;
+        }else{
+            //select not found
+            return 0;}
+    }
+
+    /*---------------------CHECKS-----------------------*/
 
     //TODO: CHECK IF WORKS
     public void checkList(FlightSearchPage flightSearchPage){
@@ -83,10 +126,6 @@ public class FlightSearchPage extends BasePage{
         this.fifthResult = flightSearchPage.getFlightPrice(5);
         System.out.println(this.fifthResult);
         flightSearchPage.clickCloseFlightPanel();
-    }
-
-    private void clickCloseFlightPanel(){
-        this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
     }
 
     //TODO: ¿are variables firstResult~etc already initialized by the time this code is run?
@@ -217,7 +256,6 @@ public class FlightSearchPage extends BasePage{
         System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
         return false;
     }
-
     public boolean checkDuration(FlightSearchPage flightSearchPage){
         int contador = 0;
         for(int i = 1; i < 7; i++){
@@ -231,7 +269,6 @@ public class FlightSearchPage extends BasePage{
             return false;
         }
     }
-
     public boolean checkSelectButton(FlightSearchPage flightSearchPage){
         int contador = 0;
         for(int i = 1; i < 7; i++){
@@ -254,43 +291,7 @@ public class FlightSearchPage extends BasePage{
             return true;
         } else {return false;}
     }
-    private String getFlightPrice(int index){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice.get(index))).getText();
-    }
 
-    private WebElement getFlightBaggageButton(int index){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightBaggageButton.get(index)));
-    }
-    private WebElement getFlightSelectButton(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightSelectButton));
-    }
-
-    private WebElement getFlightDuration(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
-    }
-
-    private int durationAdd(FlightSearchPage flightSearchPage){
-        //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
-        if(flightSearchPage.getFlightDuration().isDisplayed()){
-            return 1;
-        }else{return 0;}
-    }
-    private int selectAdd(FlightSearchPage flightSearchPage){
-        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
-            //System.out.println("Select button found");
-            return 1;
-        }else{
-            //System.out.println("select not found");
-            return 0;}
-    }
-    private int baggageAdd(FlightSearchPage flightSearchPage, int index){
-        if(flightSearchPage.getFlightBaggageButton(index).isDisplayed()){
-            //Select button found
-            return 1;
-        }else{
-            //select not found
-            return 0;}
-    }
 }
 
 
