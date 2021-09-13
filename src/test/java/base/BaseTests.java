@@ -47,7 +47,7 @@ public class BaseTests {
     //Setup
     @BeforeClass
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "resources/chromedriver93.exe");
         driver = new ChromeDriver();
         setMaximizedScreen();
         driver.get("https://www.travelocity.com");
