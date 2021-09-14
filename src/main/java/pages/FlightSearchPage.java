@@ -1,5 +1,7 @@
 package pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,8 +28,12 @@ public class FlightSearchPage extends BasePage{
     @FindBy (xpath = "(//button[contains(@class,'uitk-card-link')])")
     List<WebElement> flightResults;
 
-    @FindBy (xpath = "//button[@data-test-id='fare-type-select']")
-    List<WebElement> flightPrice;
+    /*@FindBy (xpath = "//button[@data-test-id='fare-type-select']")
+    List<WebElement> flightPrice;*///todo: no se necesita listas
+
+    @FindBy (css = "[data-test-id='details-and-fares-footer'] .uitk-lockup-price") //todo: se puede usar css
+    //@FindBy (xpath = "//div[contains(@class, 'left-align')]/section/span[contains(@class, 'lockup')]")//todo:o xpath
+    WebElement flightPrice;
     @FindBy (xpath = "//button[@data-icon='tool-close']")
     WebElement closeFlightPanel;
     @FindBy (xpath = "//h3[@class='uitk-heading-7 uitk-flex-item']")
@@ -63,8 +69,8 @@ public class FlightSearchPage extends BasePage{
         //return driver.findElement(sortDropdown).getText();
         return this.getWait().until(ExpectedConditions.elementToBeClickable(this.sortDropdown)).getText();
     }
-    private String getFlightPrice(int index){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice.get(index))).getText();
+    private String getFlightPrice(){
+        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice)).getText();
     }
 
     private WebElement getFlightBaggageButton(int index){
@@ -78,33 +84,10 @@ public class FlightSearchPage extends BasePage{
         return this.getWait().until(ExpectedConditions.elementToBeClickable(flightDuration));
     }
 
-    /*---------Private utility methods---------------*/
-    private int durationAdd(FlightSearchPage flightSearchPage){
-        //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
-        if(flightSearchPage.getFlightDuration().isDisplayed()){
-            return 1;
-        }else{return 0;}
-    }
-    private int selectAdd(FlightSearchPage flightSearchPage){
-        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
-            //System.out.println("Select button found");
-            return 1;
-        }else{
-            //System.out.println("select not found");
-            return 0;}
-    }
-    private int baggageAdd(FlightSearchPage flightSearchPage, int index){
-        if(flightSearchPage.getFlightBaggageButton(index).isDisplayed()){
-            //Select button found
-            return 1;
-        }else{
-            //select not found
-            return 0;}
-    }
 
     /*---------------------CHECKS-----------------------*/
 
-    //TODO: CHECK IF WORKS
+/*    //TODO: what is this?
     public void checkList(FlightSearchPage flightSearchPage){
         flightSearchPage.clickResult(1);
         this.firstResult = flightSearchPage.getFlightPrice(1);
@@ -126,7 +109,7 @@ public class FlightSearchPage extends BasePage{
         this.fifthResult = flightSearchPage.getFlightPrice(5);
         System.out.println(this.fifthResult);
         flightSearchPage.clickCloseFlightPanel();
-    }
+    }*/
 
     //TODO: ¿are variables firstResult~etc already initialized by the time this code is run?
     public boolean checkOrderedLowest(){
@@ -137,23 +120,27 @@ public class FlightSearchPage extends BasePage{
         int fifthInt = 0;
         /*-Retrieve prices from each result-*/
         this.clickResult(1);
-        this.firstResult = this.getFlightPrice(1);
+        this.firstResult = this.getFlightPrice();
         System.out.println(this.firstResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(2);
-        this.secondResult = this.getFlightPrice(2);
+        this.secondResult = this.getFlightPrice();
         System.out.println(this.secondResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(3);
-        this.thirdResult = this.getFlightPrice(3);
+        this.thirdResult = this.getFlightPrice();
         System.out.println(this.thirdResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(4);
-        this.fourthResult = this.getFlightPrice(4);
+        this.fourthResult = this.getFlightPrice();
         System.out.println(this.fourthResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(5);
-        this.fifthResult = this.getFlightPrice(5);
+        this.fifthResult = this.getFlightPrice();
         System.out.println(this.fifthResult);
         this.clickCloseFlightPanel();
         Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
@@ -200,23 +187,27 @@ public class FlightSearchPage extends BasePage{
         int fourthInt = 0;
         int fifthInt = 0;
         this.clickResult(1);
-        this.firstResult = this.getFlightPrice(1);
+        this.firstResult = this.getFlightPrice();
         System.out.println(this.firstResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(2);
-        this.secondResult = this.getFlightPrice(2);
+        this.secondResult = this.getFlightPrice();
         System.out.println(this.secondResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(3);
-        this.thirdResult = this.getFlightPrice(3);
+        this.thirdResult = this.getFlightPrice();
         System.out.println(this.thirdResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(4);
-        this.fourthResult = this.getFlightPrice(4);
+        this.fourthResult = this.getFlightPrice();
         System.out.println(this.fourthResult);
         this.clickCloseFlightPanel();
+        this.scrollDown();
         this.clickResult(5);
-        this.fifthResult = this.getFlightPrice(5);
+        this.fifthResult = this.getFlightPrice();
         System.out.println(this.fifthResult);
         this.clickCloseFlightPanel();
         Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
@@ -290,6 +281,34 @@ public class FlightSearchPage extends BasePage{
         {System.out.println("Baggage OK - 2");
             return true;
         } else {return false;}
+    }
+    /*---------Private utility methods---------------*/
+    private int durationAdd(FlightSearchPage flightSearchPage){
+        //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
+        if(flightSearchPage.getFlightDuration().isDisplayed()){
+            return 1;
+        }else{return 0;}
+    }
+    private int selectAdd(FlightSearchPage flightSearchPage){
+        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
+            //System.out.println("Select button found");
+            return 1;
+        }else{
+            //System.out.println("select not found");
+            return 0;}
+    }
+    private int baggageAdd(FlightSearchPage flightSearchPage, int index){
+        if(flightSearchPage.getFlightBaggageButton(index).isDisplayed()){
+            //Select button found
+            return 1;
+        }else{
+            //select not found
+            return 0;}
+    }
+    private void scrollDown(){
+        for(int i = 0; i <= 3; i++) {
+            driver.findElement(By.tagName("body")).sendKeys(Keys.DOWN);
+        }
     }
 
 }

@@ -34,18 +34,18 @@ public class Exercise1 extends BaseTests {
         //---Step2.Start---
         System.out.println("Dropdown Elements: \n ----- \n" + flightSearchPage.getDropdownText()+"\n ------- ");//Debug print to console
         flightSearchPage.selectDropdown("Price (Lowest)"); //TODO: Step a. Assert this box exists
-        flightSearchPage.checkList(flightSearchPage);//Get variables TODO: is this necessary?
-        assertTrue(flightSearchPage.checkOrderedLowest());//Step 2.a. TODO: does it assert?
+        //flightSearchPage.checkList(flightSearchPage);//Get variables TODO: is this necessary?
+        assertTrue(flightSearchPage.checkOrderedLowest());//Step 2.a.
         assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));//Step2.b.
         assertTrue(flightSearchPage.checkDuration(flightSearchPage));//Step2.c.
         assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 1)); //Step2.d.
         //---Step2.Complete---
-        flightSearchPage.selectDropdown("Price (Highest)");
-        flightSearchPage.checkList(flightSearchPage);
+        /*flightSearchPage.selectDropdown("Price (Highest)");//todo: ejercicio no pide ordered by highest
+        //flightSearchPage.checkList(flightSearchPage);
         assertTrue(flightSearchPage.checkOrderedHighest());
         assertTrue(flightSearchPage.checkDuration(flightSearchPage));
         assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));
-        assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 2));
+        assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 2));*/
     }
 
 }
