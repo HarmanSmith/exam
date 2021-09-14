@@ -33,7 +33,7 @@ public class FlightSearchPage extends BasePage{
     WebElement flightPrice;
     @FindBy (xpath = "//button[@data-icon='tool-close']")
     WebElement closeFlightPanel;
-    @FindBy (xpath = "//h3[@class='uitk-heading-7 uitk-flex-item']")
+    @FindBy (xpath = "//span[contains(@class, 'uitk-text uitk-type-300 uitk-flex-item uitk-text-emphasis-theme')]")
     WebElement flightDuration;
     @FindBy (xpath = "//button[@data-test-id='select-button']")
     WebElement flightSelectButton;
@@ -165,7 +165,6 @@ public class FlightSearchPage extends BasePage{
         scrollUp(scrollUpTimes);
         return false;
     }
-
     public boolean checkDuration(FlightSearchPage flightSearchPage){
         int contador = 0;
         for(int i = 0; i < 6; i++){
@@ -216,6 +215,88 @@ public class FlightSearchPage extends BasePage{
             scrollUp(scrollUpTimes);
             return false;}
     }
+    //todo: Pending
+    public boolean checkOrderedDurationShort(){
+        String firstResult = " ";
+        String secondResult = " ";
+        String thirdResult = " ";
+        String fourthResult = " ";
+        String fifthResult = " ";
+        int firstInt = 0;
+        int secondInt= 0;
+        int thirdInt = 0;
+        int fourthInt = 0;
+        int fifthInt = 0;
+        /*-Retrieve prices from each result-*/
+        this.clickResult(0);
+        firstResult = this.getFlightDuration().getText();
+        System.out.println(firstResult);
+        this.clickCloseFlightPanel();
+        this.scrollDown(scrollDownTimes);
+        this.clickResult(1);
+        secondResult = this.getFlightDuration().getText();
+        System.out.println(secondResult);
+        this.clickCloseFlightPanel();
+        this.scrollDown(scrollDownTimes);
+        this.clickResult(2);
+        thirdResult = this.getFlightDuration().getText();
+        System.out.println(thirdResult);
+        this.clickCloseFlightPanel();
+        this.scrollDown(scrollDownTimes);
+        this.clickResult(3);
+        fourthResult = this.getFlightDuration().getText();
+        System.out.println(fourthResult);
+        this.clickCloseFlightPanel();
+        this.scrollDown(scrollDownTimes);
+        this.clickResult(4);
+        fifthResult = this.getFlightDuration().getText();
+        System.out.println(fifthResult);
+        this.clickCloseFlightPanel();
+        /*Example String:
+        * 1h 7m (Nonstop)
+        * */
+        Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
+        Matcher m = p.matcher(firstResult);//pasamos el primer string al matcher m
+        while(m.find()) {
+            firstInt = Integer.parseInt(m.group());//lo guardamos como INT
+        }
+        m = p.matcher(secondResult);
+        while(m.find()) {
+            secondInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(thirdResult);
+        while(m.find()) {
+            thirdInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(fourthResult);
+        while(m.find()) {
+            fourthInt = Integer.parseInt(m.group());
+        }
+        m = p.matcher(fifthResult);
+        while(m.find()) {
+            fifthInt = Integer.parseInt(m.group());
+        }
+        if(firstInt < secondInt){
+            System.out.println("Lowest ordered correct: passed on second first check");
+            scrollUp(scrollUpTimes);
+            return true;
+        }else if(secondInt < thirdInt){
+            System.out.println("Lowest ordered correct: passed on second check");
+            scrollUp(scrollUpTimes);
+            return true;
+        }else if(thirdInt < fourthInt){
+            System.out.println("Lowest ordered correct: passed on second third check");
+            scrollUp(scrollUpTimes);
+            return true;
+        }else if(fourthInt < fifthInt){
+            System.out.println("Lowest ordered correct: passed on second fourth check");
+            scrollUp(scrollUpTimes);
+            return true;
+        }
+        System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
+        scrollUp(scrollUpTimes);
+        return false;
+    }
     /*---------Private utility methods---------------*/
     private int durationAdd(FlightSearchPage flightSearchPage){
         //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
@@ -251,7 +332,6 @@ public class FlightSearchPage extends BasePage{
     }
 
 }
-
 
 
 //----------------------------------------------------------------------------------------------------------------------
