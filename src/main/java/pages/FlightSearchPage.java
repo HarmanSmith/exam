@@ -202,7 +202,7 @@ public class FlightSearchPage extends BasePage{
         int contador = 0;
         for(int i = 0; i < 6; i++) {
             flightSearchPage.clickResult(i);
-            contador = contador + baggageAdd(flightSearchPage, 1); //todo: for now; only checks first baggage
+            contador = contador + baggageAdd(flightSearchPage, 1); //for now; only checks first baggage
         }
         if (contador >= 5)
         {
@@ -215,7 +215,9 @@ public class FlightSearchPage extends BasePage{
             scrollUp(scrollUpTimes);
             return false;}
     }
-    //todo: Pending
+    //todo-------------------------------------------------------------------------------------------------------------
+    //todo: Working on this area now   vv                                                                             |
+    //todo-------------------------------------------------------------------------------------------------------------
     public boolean checkOrderedDurationShort(){
         String firstResult = " ";
         String secondResult = " ";
