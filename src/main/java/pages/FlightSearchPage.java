@@ -257,7 +257,25 @@ public class FlightSearchPage extends BasePage{
         /*Example String:
         * 1h 7m (Nonstop)
         * */
-        Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
+
+        //todo: FIX REGEX
+        String mydata = "10m (Nonstop)";
+        Pattern pattern = Pattern.compile("((?<hour>\\d*)h)?\\s*((?<minute>\\d*)m)?");
+        Matcher matcher = pattern.matcher(mydata);
+        if (matcher.find())
+        {
+            String hourString = matcher.group("hour");
+            if (hourString == null) {
+                hourString = "0";
+            }
+            String minuteString = matcher.group("minute");
+            if (minuteString == null) {
+                minuteString = "0";
+            }
+            int totalMinutes = Integer.parseInt(hourString)*60 + Integer.parseInt(minuteString);
+            System.out.println(totalMinutes);
+        }
+        /*Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
         Matcher m = p.matcher(firstResult);//pasamos el primer string al matcher m
         while(m.find()) {
             firstInt = Integer.parseInt(m.group());//lo guardamos como INT
@@ -277,7 +295,7 @@ public class FlightSearchPage extends BasePage{
         m = p.matcher(fifthResult);
         while(m.find()) {
             fifthInt = Integer.parseInt(m.group());
-        }
+        }*/
         if(firstInt < secondInt){
             System.out.println("Lowest ordered correct: passed on second first check");
             scrollUp(scrollUpTimes);
