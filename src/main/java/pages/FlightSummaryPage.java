@@ -20,29 +20,33 @@ public class FlightSummaryPage extends BasePage{
     @FindBy (xpath = "//span[@class='uitk-text uitk-type-500 uitk-type-bold uitk-text-emphasis-theme']")
     WebElement totalPrice;
 
+    @FindBy (xpath = "//div[@class='uitk-card-content-section uitk-card-content-section-border-block-end uitk-card-content-section-padded uitk-spacing uitk-spacing-padding-blockend-three uitk-spacing-padding-inline-three'")
+    WebElement departureInformation;
+    @FindBy (xpath = "//div[@class='uitk-card-content-section uitk-card-content-section-border-block-end uitk-card-content-section-padded uitk-spacing uitk-spacing-padding-blockend-three uitk-spacing-padding-inline-three']")
+    WebElement returnInformation;
+
     public boolean priceExists(){
         return this.getWait().until(ExpectedConditions.visibilityOf(totalPrice)).isDisplayed();
     }
-    public void printSomethingDebug(){
-        System.out.println(this.getWait().until(ExpectedConditions.visibilityOf(totalPrice)).getText());
-    }
-
     public void switchTabs(){
         ArrayList<String> newTb = new ArrayList<String>(this.driver.getWindowHandles());
         //switch to new tab
         this.driver.switchTo().window(newTb.get(1));
     }
-
-    public int getTotalPriceInt(){
-        String priceString = this.totalPrice.getText();
-        int priceInt = 0;
-        Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
-        Matcher m = p.matcher(priceString);//pasamos el primer string al matcher m
-        while(m.find()) {
-            priceInt = Integer.parseInt(m.group());//lo guardamos como INT
-        }
-        return priceInt;
+    public boolean checkDepartureInformation(){
+        return this.getWait().until(ExpectedConditions.visibilityOf(departureInformation)).isDisplayed();
     }
-
-
+    public boolean checkReturnInformation(){
+        return this.getWait().until(ExpectedConditions.visibilityOf(returnInformation)).isDisplayed();
+    }
 }
+/* Old code
+*
+*
+    public void printSomethingDebug(){
+        System.out.println(this.getWait().until(ExpectedConditions.visibilityOf(totalPrice)).getText());
+    }
+*
+*
+*
+* */

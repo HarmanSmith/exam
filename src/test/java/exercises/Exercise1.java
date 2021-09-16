@@ -77,6 +77,12 @@ public class Exercise1 extends BaseTests {
         //flightSummaryPage.printSomethingDebug();
         assertTrue(flightSummaryPage.priceExists());
         System.out.println("Step6.a. complete");
+        assertTrue(flightSummaryPage.checkDepartureInformation());
+        assertTrue(flightSummaryPage.checkReturnInformation());
+        System.out.println("Step6.b. complete");
+        //TODO: "Price guarantee" assert ??
+        //System.out.println("Step6.c. complete");
+
 
 
         /*flightSearchPage.selectDropdown("Price (Highest)");//ejercicio no pide ordered by highest
