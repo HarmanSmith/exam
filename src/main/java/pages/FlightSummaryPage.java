@@ -19,7 +19,7 @@ public class FlightSummaryPage extends BasePage{
     @FindBy (className = "class.'uitk-text uitk-type-500 uitk-type-bold uitk-text-emphasis-theme")
     WebElement totalPrice;
 
-
+    //todo: error en este metodo?
     public boolean priceExists(){
         return this.getWait().until(ExpectedConditions.visibilityOf(totalPrice)).isDisplayed();
     }
