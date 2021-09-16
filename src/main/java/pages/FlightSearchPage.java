@@ -62,6 +62,9 @@ public class FlightSearchPage extends BasePage{
             return false;
         }
     }
+    public void clickResult2(int index){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(flightResults.get(index))).click();
+    }
 
     public void clickSelectFlightButton(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightSelectButton)).click();

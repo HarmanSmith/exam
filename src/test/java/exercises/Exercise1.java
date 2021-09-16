@@ -58,22 +58,23 @@ public class Exercise1 extends BaseTests {
         System.out.println("Step4 complete");
         //---Step4.Complete---
         //---Step5.Start---
-        System.out.println("Attempting to click result");
-        waitMethod(3);
-        //todo FIX BUG: For some reason switches to ordered by lowest price
-        flightSearchPage.clickResult(0);
+        System.out.println("Attempting to click thirdresult");
+        waitMethod(10);
+        flightSearchPage.clickResult(2);
         System.out.println("Clicked result");
         System.out.println("Attempting to click select");
         flightSearchPage.clickSelectFlightButton();
         System.out.println("Clicked select");
-        System.out.println("No thanks button");
+        System.out.println("No thanks button attempt");
         FlightSummaryPage flightSummaryPage = flightSearchPage.clickNoThanks();
-        System.out.println("No thanks successful");
+        System.out.println("No thanks button successful");
 
         //---Step5.Complete---
         //---Step6.Start---
+        System.out.println("Attempting to switch tabs");
         flightSummaryPage.switchTabs(); // Fixed issue with tabs
-        flightSummaryPage.printSomethingDebug();
+        System.out.println("Switch tabs successful");
+        //flightSummaryPage.printSomethingDebug();
         assertTrue(flightSummaryPage.priceExists());
         System.out.println("Step6.a. complete");
 
