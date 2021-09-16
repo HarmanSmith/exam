@@ -45,6 +45,7 @@ public class Exercise1 extends BaseTests {
         //---Step2.Complete---
         //---Step3.Start---
         flightSearchPage.selectDropdown("Duration (Shortest)");
+        assertTrue(flightSearchPage.checkOrderedDurationShort());
 
 
         /*flightSearchPage.selectDropdown("Price (Highest)");//todo: ejercicio no pide ordered by highest

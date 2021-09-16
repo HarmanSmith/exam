@@ -20,8 +20,10 @@ public class FlightSearchPage extends BasePage{
     static private int scrollUpTimes = 12;
     static private int scrollDownTimes = 3;
 
+
     @FindBy (id = "listings-sort")
     WebElement sortDropdown;
+
     @FindBy (xpath = "(//button[contains(@class,'uitk-card-link')])")
     List<WebElement> flightResults;
 
@@ -44,8 +46,8 @@ public class FlightSearchPage extends BasePage{
     /*---------------Interactions with website-------------------*/
     public void selectDropdown(String option){
         System.out.println("Option: " + option);
-        Select dropdownelement = new Select(this.sortDropdown);
-        dropdownelement.selectByVisibleText(option);
+        Select dropdownElement = new Select(this.sortDropdown);
+        dropdownElement.selectByVisibleText(option);
         //return new FlightSearchPage(this.driver);
     }
     public boolean clickResult(int index){
@@ -170,14 +172,13 @@ public class FlightSearchPage extends BasePage{
         for(int i = 0; i < 6; i++){
             flightSearchPage.clickResult(i);
             contador = contador + durationAdd(flightSearchPage);
+            clickCloseFlightPanel();
         }
         if(contador >= 5)
         {
         System.out.println("Duration OK - 1");
-        clickCloseFlightPanel();
         scrollUp(scrollUpTimes);
         return true;}else {
-            clickCloseFlightPanel();
             scrollUp(scrollUpTimes);
             return false;
         }
@@ -187,14 +188,15 @@ public class FlightSearchPage extends BasePage{
         for(int i = 0; i < 6; i++){
             flightSearchPage.clickResult(i);
             contador = contador + selectAdd(flightSearchPage);
+            clickCloseFlightPanel();
         }
         if(contador >= 5)
         {System.out.println("Select Button OK");
-            clickCloseFlightPanel();
+            //clickCloseFlightPanel();
             scrollUp(scrollUpTimes);
             return true;
         }else{
-            clickCloseFlightPanel();
+            //clickCloseFlightPanel();
             scrollUp(scrollUpTimes);
             return false;}
     }
@@ -203,21 +205,18 @@ public class FlightSearchPage extends BasePage{
         for(int i = 0; i < 6; i++) {
             flightSearchPage.clickResult(i);
             contador = contador + baggageAdd(flightSearchPage, 1); //for now; only checks first baggage
+            clickCloseFlightPanel();
         }
         if (contador >= 5)
         {
             System.out.println("Baggage OK - 2");
-            clickCloseFlightPanel();
             scrollUp(scrollUpTimes);
             return true;
         } else {
-            clickCloseFlightPanel();
             scrollUp(scrollUpTimes);
             return false;}
     }
-    //todo-------------------------------------------------------------------------------------------------------------
-    //todo: Working on this area now   vv                                                                             |
-    //todo-------------------------------------------------------------------------------------------------------------
+
     public boolean checkOrderedDurationShort(){
         String firstResult = " ";
         String secondResult = " ";
@@ -230,6 +229,7 @@ public class FlightSearchPage extends BasePage{
         int fourthInt = 0;
         int fifthInt = 0;
         /*-Retrieve prices from each result-*/
+        scrollUp(12);
         this.clickResult(0);
         firstResult = this.getFlightDuration().getText();
         System.out.println(firstResult);
@@ -254,48 +254,11 @@ public class FlightSearchPage extends BasePage{
         fifthResult = this.getFlightDuration().getText();
         System.out.println(fifthResult);
         this.clickCloseFlightPanel();
-        /*Example String:
-        * 1h 7m (Nonstop)
-        * */
-
-        //todo: FIX REGEX
-        String mydata = "10m (Nonstop)";
-        Pattern pattern = Pattern.compile("((?<hour>\\d*)h)?\\s*((?<minute>\\d*)m)?");
-        Matcher matcher = pattern.matcher(mydata);
-        if (matcher.find())
-        {
-            String hourString = matcher.group("hour");
-            if (hourString == null) {
-                hourString = "0";
-            }
-            String minuteString = matcher.group("minute");
-            if (minuteString == null) {
-                minuteString = "0";
-            }
-            int totalMinutes = Integer.parseInt(hourString)*60 + Integer.parseInt(minuteString);
-            System.out.println(totalMinutes);
-        }
-        /*Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
-        Matcher m = p.matcher(firstResult);//pasamos el primer string al matcher m
-        while(m.find()) {
-            firstInt = Integer.parseInt(m.group());//lo guardamos como INT
-        }
-        m = p.matcher(secondResult);
-        while(m.find()) {
-            secondInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(thirdResult);
-        while(m.find()) {
-            thirdInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fourthResult);
-        while(m.find()) {
-            fourthInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fifthResult);
-        while(m.find()) {
-            fifthInt = Integer.parseInt(m.group());
-        }*/
+        firstInt = regexDuration(firstResult);
+        secondInt = regexDuration(secondResult);
+        thirdInt = regexDuration(thirdResult);
+        fourthInt = regexDuration(fourthResult);
+        fifthInt = regexDuration(fifthResult);
         if(firstInt < secondInt){
             System.out.println("Lowest ordered correct: passed on second first check");
             scrollUp(scrollUpTimes);
@@ -317,7 +280,28 @@ public class FlightSearchPage extends BasePage{
         scrollUp(scrollUpTimes);
         return false;
     }
+
     /*---------Private utility methods---------------*/
+
+    private int regexDuration(String unprocessedText){
+        int result = 0;
+        //Example String: 1h 7m (Nonstop)
+        Pattern pattern = Pattern.compile("((?<hour>\\d*)h)?\\s*((?<minute>\\d*)m)?");// 2 groups minute and seconds
+        Matcher matcher = pattern.matcher(unprocessedText);
+        if (matcher.find())
+        {
+            String hourString = matcher.group("hour");
+            if (hourString == null) {// in case there's no match
+                hourString = "0";
+            }
+            String minuteString = matcher.group("minute");
+            if (minuteString == null) {
+                minuteString = "0";
+            }
+            result = Integer.parseInt(hourString)*60 + Integer.parseInt(minuteString);
+        }
+        return result;
+    }
     private int durationAdd(FlightSearchPage flightSearchPage){
         //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
         if(flightSearchPage.getFlightDuration().isDisplayed()){
