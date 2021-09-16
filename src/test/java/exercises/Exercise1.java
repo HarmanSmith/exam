@@ -52,6 +52,7 @@ public class Exercise1 extends BaseTests {
         System.out.println("Step3.a. complete");
         //---Step3.Complete---
         //---Step4.Start---
+        flightSearchPage.selectDropdown("Duration (Shortest)");
         flightSearchPage.clickResult(0);
         flightSearchPage.clickSelectFlightButton();
         System.out.println("Step4 complete");
@@ -59,7 +60,8 @@ public class Exercise1 extends BaseTests {
         //---Step5.Start---
         System.out.println("Attempting to click result");
         waitMethod(3);
-        flightSearchPage.clickResult(2);
+        //todo FIX BUG: For some reason switches to ordered by lowest price
+        flightSearchPage.clickResult(0);
         System.out.println("Clicked result");
         System.out.println("Attempting to click select");
         flightSearchPage.clickSelectFlightButton();
