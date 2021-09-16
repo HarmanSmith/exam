@@ -14,7 +14,7 @@ public abstract class BasePage {
         this.driver = driver;
         PageFactory.initElements(this.getDriver(), this);
         if(this.wait==null){ //singleton
-            this.wait = new WebDriverWait(this.driver, 30);
+            this.wait = new WebDriverWait(this.driver, 120);
         }
     }
 

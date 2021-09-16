@@ -39,10 +39,12 @@ public class FlightSearchPage extends BasePage{
     WebElement flightDuration;
     @FindBy (xpath = "//button[@data-test-id='select-button']")
     WebElement flightSelectButton;
+    @FindBy (xpath = "//button[contains(@data-test-id, 'select-button')]")
+    WebElement flightSelectButton2;
     @FindBy (xpath = "//td[@class='uitk-table-react-cell uitk-spacing uitk-spacing-padding-blockstart-three uitk-table-react-cell-border-none uitk-table-react-cell-textalign-right uitk-table-react-cell-verticalalign-top']//span[@class='uitk-text uitk-type-300']")
     List<WebElement> flightBaggageButton;
-
-
+    @FindBy (xpath = "//a[contains(@data-test-id, 'forcedChoiceNoThanks')]")
+    WebElement noThanksButton;
     /*---------------Interactions with website-------------------*/
     public void selectDropdown(String option){
         System.out.println("Option: " + option);
@@ -52,18 +54,28 @@ public class FlightSearchPage extends BasePage{
     }
     public boolean clickResult(int index){
         this.getWait().until(ExpectedConditions.visibilityOfAllElements(this.flightResults));
-        if(this.flightResults.size()>index){
-            this.flightResults.get(index).click();
+        if(this.flightResults.size()>=index){
+            this.getWait().until(ExpectedConditions.elementToBeClickable(flightResults.get(index))).click();
             //return this.getWait().until(ExpectedConditions.visibilityOf(this.flightSelectButton)).isDisplayed();
             return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightSelectButton)).isDisplayed();
         }else{
             return false;
         }
     }
+
+    public void clickSelectFlightButton(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightSelectButton)).click();
+    }
     private void clickCloseFlightPanel(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.closeFlightPanel)).click();
     }
-
+    public FlightSummaryPage clickNoThanks(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.noThanksButton)).click();
+        return new FlightSummaryPage(this.driver);
+    }
+    /*public void refreshList(){
+        this.flightResults = reInitializeStaleElement(flightResults);
+    }*/
     /*-----------------Retrieve info---------------------*/
     public String getDropdownText(){
         //return driver.findElement(sortDropdown).getText();

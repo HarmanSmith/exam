@@ -59,7 +59,7 @@ public class BaseTests {
     public void tearDown(){
         //esperamos unos segundos para chequear la pagina antes de cerrar
         System.out.println("Quitting");
-        waitMethod(3);
+        waitMethod(2);
         driver.quit();
     }
 }
