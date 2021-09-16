@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 import pages.FlightSearchPage;
 import pages.FlightSummaryPage;
 import pages.HomePage;
+
+import java.util.ArrayList;
 import java.util.regex.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -68,6 +70,8 @@ public class Exercise1 extends BaseTests {
 
         //---Step5.Complete---
         //---Step6.Start---
+        flightSummaryPage.switchTabs(); // Fixed issue with tabs
+        flightSummaryPage.printSomethingDebug();
         assertTrue(flightSummaryPage.priceExists());
         System.out.println("Step6.a. complete");
 

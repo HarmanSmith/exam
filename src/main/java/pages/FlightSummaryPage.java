@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,12 +17,20 @@ public class FlightSummaryPage extends BasePage{
     }
 
 
-    @FindBy (className = "class.'uitk-text uitk-type-500 uitk-type-bold uitk-text-emphasis-theme")
+    @FindBy (xpath = "//span[@class='uitk-text uitk-type-500 uitk-type-bold uitk-text-emphasis-theme']")
     WebElement totalPrice;
 
-    //todo: error en este metodo?
     public boolean priceExists(){
         return this.getWait().until(ExpectedConditions.visibilityOf(totalPrice)).isDisplayed();
+    }
+    public void printSomethingDebug(){
+        System.out.println(this.getWait().until(ExpectedConditions.visibilityOf(totalPrice)).getText());
+    }
+
+    public void switchTabs(){
+        ArrayList<String> newTb = new ArrayList<String>(this.driver.getWindowHandles());
+        //switch to new tab
+        this.driver.switchTo().window(newTb.get(1));
     }
 
     public int getTotalPriceInt(){
