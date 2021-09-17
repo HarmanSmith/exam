@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import pages.FlightSearchPage;
 import pages.FlightSummaryPage;
 import pages.HomePage;
+import pages.WhosTravellingPage;
 
 import java.util.ArrayList;
 import java.util.regex.*;
@@ -82,8 +83,9 @@ public class Exercise1 extends BaseTests {
         System.out.println("Step6.b. complete");
         //TODO: "Price guarantee" assert ??
         //System.out.println("Step6.c. complete");
-
-
+        WhosTravellingPage whosTravellingPage = flightSummaryPage.clickCheckout();
+        System.out.println("STEP7");
+        assertTrue(whosTravellingPage.checkLogo());
 
         /*flightSearchPage.selectDropdown("Price (Highest)");//ejercicio no pide ordered by highest
         //flightSearchPage.checkList(flightSearchPage);

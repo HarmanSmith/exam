@@ -25,6 +25,13 @@ public class FlightSummaryPage extends BasePage{
     @FindBy (xpath = "//div[@class='uitk-card-content-section uitk-card-content-section-border-block-end uitk-card-content-section-padded uitk-spacing uitk-spacing-padding-blockend-three uitk-spacing-padding-inline-three']")
     WebElement returnInformation;
 
+    @FindBy (xpath = "//button[@data-test-id='goto-checkout-button'")
+    WebElement checkoutButton;
+
+    public WhosTravellingPage clickCheckout(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(checkoutButton)).click();
+        return new WhosTravellingPage(this.driver);
+    }
     public boolean priceExists(){
         return this.getWait().until(ExpectedConditions.visibilityOf(totalPrice)).isDisplayed();
     }
