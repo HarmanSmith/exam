@@ -25,7 +25,8 @@ public class HotelsSearchPage extends BasePage{
     WebElement propertyNameSearchBox;
     @FindBy(xpath = "//h3[@class='uitk-heading-5']")
     WebElement filterArea;
-    @FindBy(xpath="//a[@data-stid='open-hotel-information'] ")
+    @FindBy(xpath="//span[@data-stid='price-lockup-text']")
+    //@FindBy(xpath="//*[@id='app-layer-base']/div/main/div/div/div[1]/section/div[2]/div/div[2]/section[2]/ol/li[34]/div/div/div[2]/div/div[2]/div[2]/div/div/div[1]/span/span'")
     List<WebElement> resultCards;
 
     public boolean checkLogo(){
@@ -52,7 +53,60 @@ public class HotelsSearchPage extends BasePage{
         Select dropdownElement = new Select(this.sortDropdown);
         dropdownElement.selectByVisibleText(option);
     }
-    public boolean clickResult(int index){
+    public int getListSize(){
+        return this.resultCards.size();
+    }
+
+    private String getPriceString(int index){
+        scrollDown(2);
+        getWait().until(ExpectedConditions.visibilityOf(this.resultCards.get(index)));
+        if(index<=resultCards.size()){
+            return resultCards.get(index).getText();
+        }else{
+        return "0";}
+    }
+
+    private int getFlightPrice(String price){
+        int contenedor = 0;
+        Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
+        Matcher m = p.matcher(price);//pasamos el primer string al matcher m
+        while(m.find()) {
+            contenedor = Integer.parseInt(m.group());//lo guardamos como INT
+        }
+        return contenedor;
+    }
+
+
+    public boolean checkOrderedLowest(){
+        int firstInt = getFlightPrice(getPriceString(0));
+        int secondInt = getFlightPrice(getPriceString(1));
+        if(firstInt < secondInt){
+            System.out.println("Lowest: Pass on first check");
+            return true;
+        }else{
+            int thirdInt = getFlightPrice(getPriceString(2));
+            if(secondInt<thirdInt){
+                System.out.println("Lowest: Pass on second check");
+                return true;
+            }else{
+                int fourthInt=getFlightPrice(getPriceString(3));
+                if(thirdInt<fourthInt){
+                    System.out.println("Lowest: Pass on third check");
+                    return true;
+                }else{
+                    int fifthInt=getFlightPrice(getPriceString(4));
+                    if(fourthInt<fifthInt){
+                        System.out.println("Lowest: Pass on fourth check");
+                        return true;
+                    }else{
+                        System.out.println("Lowest: something went wrong with ordering");
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+       /*public boolean clickResult(int index){
         this.getWait().until(ExpectedConditions.visibilityOfAllElements(this.resultCards));
         if(this.resultCards.size()>=index){
             this.getWait().until(ExpectedConditions.elementToBeClickable(resultCards.get(index))).click();
@@ -62,48 +116,5 @@ public class HotelsSearchPage extends BasePage{
         }else{
             return false;
         }
-    }
-    private String getFlightPrice(){
-        return this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightPrice)).getText();
-    }
-
-
-    public boolean checkOrderedLowest(){
-        String firstResult = " ";
-        String secondResult = " ";
-        String thirdResult = " ";
-        String fourthResult = " ";
-        String fifthResult = " ";
-        int firstInt = 0;
-        int secondInt= 0;
-        int thirdInt = 0;
-        int fourthInt = 0;
-        int fifthInt = 0;
-        /*-Retrieve prices from each result-*/
-        this.clickResult(0);
-        firstResult = this.getFlightPrice();
-        System.out.println(firstResult);
-        this.clickCloseFlightPanel();
-        this.scrollDown(scrollDownTimes);
-        this.clickResult(1);
-        secondResult = this.getFlightPrice();
-        System.out.println(secondResult);
-        this.clickCloseFlightPanel();
-        Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
-        Matcher m = p.matcher(firstResult);//pasamos el primer string al matcher m
-        while(m.find()) {
-            firstInt = Integer.parseInt(m.group());//lo guardamos como INT
-        }
-        m = p.matcher(secondResult);
-        while(m.find()) {
-            secondInt = Integer.parseInt(m.group());
-        }
-
-        if(firstInt < secondInt){
-            System.out.println("Lowest ordered correct: passed on second first check");
-            scrollUp(scrollUpTimes);
-            return true;
-        }else {
-        }
-    }
+    }*/
 }

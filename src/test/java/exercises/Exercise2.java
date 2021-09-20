@@ -43,7 +43,12 @@ public class Exercise2 extends BaseTests {
         assertTrue(hotelsSearchPage.checkTravelersButton());
         System.out.println("travelers button ok");
         System.out.println("Step 3 complete");
-        System.out.println(hotelsSearchPage.getDropdownText());
-        hotelsSearchPage.selectDropdown("Price (Lowest)");
+        //System.out.println(hotelsSearchPage.getDropdownText());
+        hotelsSearchPage.selectDropdown("Price");
+        waitMethod(5);
+        System.out.println(hotelsSearchPage.getListSize());
+        assertTrue(hotelsSearchPage.checkOrderedLowest());
+        System.out.println("Step 4 complete");
+
     }
 }
