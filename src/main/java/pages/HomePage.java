@@ -24,6 +24,10 @@ public class HomePage extends BasePage {
     @FindBy(xpath ="//a[@href='?pwaLob=wizard-cruise-pwa']" )
     WebElement cruisesButton;
 
+    //Hotel elements
+    @FindBy (xpath="//button[@data-testid='travelers-field-trigger']")
+    WebElement travelersButton;
+
     //Flights tab buttons
     @FindBy(xpath = "//a[@href='?flightType=roundtrip']")
     WebElement flightsRoundtripButton;
@@ -31,6 +35,8 @@ public class HomePage extends BasePage {
     WebElement flightsDepartureBox;
     @FindBy(xpath = "//button[@aria-label='Going to']")
     WebElement flightsDestinationBox;
+    @FindBy(xpath="//button[@data-stid='location-field-destination-menu-trigger'] ")
+    WebElement hotelsDestinationBox;
     @FindBy(xpath = "//input[@placeholder='Where are you leaving from?']")
     WebElement flightsDepartureInput;
     @FindBy(xpath = "//button[@aria-label='Going to']")
@@ -51,6 +57,9 @@ public class HomePage extends BasePage {
     WebElement flightsCalendarDayStart;
     @FindBy(css = "[data-day='7']")
     WebElement flightsCalendarDayEnd;
+    @FindBy(css = "[data-day='13']")
+    WebElement flightsCalendarDayEnd_Exercise2;
+
     @FindBy(xpath = "(//div//button[contains(@data-stid,'apply-date-picker')])")
     WebElement flightsCalendarApply;
 
@@ -107,6 +116,11 @@ public class HomePage extends BasePage {
         //driver.findElement(flightsCalendarDayEnd).click();
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsCalendarDayEnd)).click();
     }
+    public void clickFlightsCalendarDayEnd_Exercise2() {
+        //driver.findElement(flightsCalendarDayEnd).click();
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsCalendarDayEnd_Exercise2)).click();
+    }
+
     public void clickFlightsCalendarApply(){
         //driver.findElement(flightsCalendarApply).click();
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsCalendarApply)).click();
@@ -114,6 +128,15 @@ public class HomePage extends BasePage {
     public FlightSearchPage clickFlightSearch(){
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsSearch)).click();
         return new FlightSearchPage(this.driver);
+    }
+    public HotelsSearchPage clickHotelsSearch(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsSearch)).click();
+        return new HotelsSearchPage(this.driver);
+    }
+    //checks
+    public boolean travelersCheck(){
+        this.getWait().until(ExpectedConditions.visibilityOf(travelersButton));
+        return this.travelersButton.isDisplayed();
     }
     //typing
     public void typeDeparture(String departure){
@@ -126,5 +149,13 @@ public class HomePage extends BasePage {
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.flightsDestinationInput)).sendKeys(destination + Keys.ENTER);
 
     }
+    public void clickHotelsDestinationButton(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.hotelsDestinationBox)).click();
+    }
+    public void typeHotelsDestination(String destination){
+        //driver.findElement(flightsDestinationInput).sendKeys( destination + Keys.ENTER);
 
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.hotelsDestinationBox)).sendKeys(destination + Keys.ENTER);
+
+    }
 }

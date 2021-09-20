@@ -15,11 +15,11 @@ import static org.testng.Assert.assertTrue;
 
 public class Exercise1 extends BaseTests {
 
-    private String destination = "のLAX";// Unicode
-    private String origin = "LAS";
+    static private String destination = "のLAX";// Unicode
+    static private String origin = "LAS";
 
     @Test
-    public void setDestination(){
+    public void exercise1Method(){
         //---Step1.Start---
         homePage.clickFlights();
         homePage.clickDepartureButton();
