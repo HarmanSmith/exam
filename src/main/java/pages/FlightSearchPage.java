@@ -125,21 +125,6 @@ public class FlightSearchPage extends BasePage{
         secondResult = this.getFlightPrice();
         System.out.println(secondResult);
         this.clickCloseFlightPanel();
-        this.scrollDown(scrollDownTimes);
-        this.clickResult(2);
-        thirdResult = this.getFlightPrice();
-        System.out.println(thirdResult);
-        this.clickCloseFlightPanel();
-        this.scrollDown(scrollDownTimes);
-        this.clickResult(3);
-        fourthResult = this.getFlightPrice();
-        System.out.println(fourthResult);
-        this.clickCloseFlightPanel();
-        this.scrollDown(scrollDownTimes);
-        this.clickResult(4);
-        fifthResult = this.getFlightPrice();
-        System.out.println(fifthResult);
-        this.clickCloseFlightPanel();
         Pattern p = Pattern.compile("\\d+");//Parse STRINGS with $ symbols into INT variables
         Matcher m = p.matcher(firstResult);//pasamos el primer string al matcher m
         while(m.find()) {
@@ -149,34 +134,58 @@ public class FlightSearchPage extends BasePage{
         while(m.find()) {
             secondInt = Integer.parseInt(m.group());
         }
-        m = p.matcher(thirdResult);
-        while(m.find()) {
-            thirdInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fourthResult);
-        while(m.find()) {
-            fourthInt = Integer.parseInt(m.group());
-        }
-        m = p.matcher(fifthResult);
-        while(m.find()) {
-            fifthInt = Integer.parseInt(m.group());
-        }
+
         if(firstInt < secondInt){
             System.out.println("Lowest ordered correct: passed on second first check");
             scrollUp(scrollUpTimes);
             return true;
-        }else if(secondInt < thirdInt){
-            System.out.println("Lowest ordered correct: passed on second check");
+        }else {
+
+            this.scrollDown(scrollDownTimes);
+            this.clickResult(2);
+            thirdResult = this.getFlightPrice();
+            m = p.matcher(thirdResult);
+            while(m.find()) {
+                thirdInt = Integer.parseInt(m.group());
+            }
+            System.out.println(thirdResult);
+            this.clickCloseFlightPanel();
+            this.scrollDown(scrollDownTimes);
+            if(secondInt < thirdInt){System.out.println("Lowest ordered correct: passed on second check");
             scrollUp(scrollUpTimes);
-            return true;
-        }else if(thirdInt < fourthInt){
-            System.out.println("Lowest ordered correct: passed on second third check");
-            scrollUp(scrollUpTimes);
-            return true;
-        }else if(fourthInt < fifthInt){
-            System.out.println("Lowest ordered correct: passed on second fourth check");
-            scrollUp(scrollUpTimes);
-            return true;
+            return true;}else {
+
+                this.clickResult(3);
+                fourthResult = this.getFlightPrice();
+                System.out.println(fourthResult);
+
+                m = p.matcher(fourthResult);
+                while(m.find()) {
+                    fourthInt = Integer.parseInt(m.group());
+                }
+                this.clickCloseFlightPanel();
+                if (thirdInt < fourthInt) {
+                    System.out.println("Lowest ordered correct: passed on second third check");
+                    scrollUp(scrollUpTimes);
+                    return true;
+                } else {
+
+                    this.scrollDown(scrollDownTimes);
+                    this.clickResult(4);
+                    fifthResult = this.getFlightPrice();
+                    m = p.matcher(fifthResult);
+                    while(m.find()) {
+                        fifthInt = Integer.parseInt(m.group());
+                    }
+                    System.out.println(fifthResult);
+                    this.clickCloseFlightPanel();
+                    if (fourthInt < fifthInt) {
+                        System.out.println("Lowest ordered correct: passed on second fourth check");
+                        scrollUp(scrollUpTimes);
+                        return true;
+                    }
+                }
+            }
         }
         System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
         scrollUp(scrollUpTimes);
@@ -254,46 +263,55 @@ public class FlightSearchPage extends BasePage{
         secondResult = this.getFlightDuration().getText();
         System.out.println(secondResult);
         this.clickCloseFlightPanel();
-        this.scrollDown(scrollDownTimes);
-        this.clickResult(2);
-        thirdResult = this.getFlightDuration().getText();
-        System.out.println(thirdResult);
-        this.clickCloseFlightPanel();
-        this.scrollDown(scrollDownTimes);
-        this.clickResult(3);
-        fourthResult = this.getFlightDuration().getText();
-        System.out.println(fourthResult);
-        this.clickCloseFlightPanel();
-        this.scrollDown(scrollDownTimes);
-        this.clickResult(4);
-        fifthResult = this.getFlightDuration().getText();
-        System.out.println(fifthResult);
-        this.clickCloseFlightPanel();
         firstInt = regexDuration(firstResult);
         secondInt = regexDuration(secondResult);
-        thirdInt = regexDuration(thirdResult);
-        fourthInt = regexDuration(fourthResult);
-        fifthInt = regexDuration(fifthResult);
         if(firstInt < secondInt){
             System.out.println("Lowest ordered correct: passed on second first check");
             scrollUp(scrollUpTimes);
             return true;
-        }else if(secondInt < thirdInt){
-            System.out.println("Lowest ordered correct: passed on second check");
-            scrollUp(scrollUpTimes);
-            return true;
-        }else if(thirdInt < fourthInt){
-            System.out.println("Lowest ordered correct: passed on second third check");
-            scrollUp(scrollUpTimes);
-            return true;
-        }else if(fourthInt < fifthInt){
-            System.out.println("Lowest ordered correct: passed on second fourth check");
-            scrollUp(scrollUpTimes);
-            return true;
+        }else {
+            this.scrollDown(scrollDownTimes);
+            this.clickResult(2);
+            thirdResult = this.getFlightDuration().getText();
+            thirdInt = regexDuration(thirdResult);
+            System.out.println(thirdResult);
+            this.clickCloseFlightPanel();
+            if (secondInt < thirdInt) {
+                System.out.println("Lowest ordered correct: passed on second check");
+                scrollUp(scrollUpTimes);
+                return true;
+            } else {
+
+                this.scrollDown(scrollDownTimes);
+                this.clickResult(3);
+                fourthResult = this.getFlightDuration().getText();
+                fourthInt = regexDuration(fourthResult);
+                System.out.println(fourthResult);
+                this.clickCloseFlightPanel();
+                if (thirdInt < fourthInt) {
+                    System.out.println("Lowest ordered correct: passed on second third check");
+                    scrollUp(scrollUpTimes);
+                    return true;
+                } else {
+                    this.scrollDown(scrollDownTimes);
+                    this.clickResult(4);
+                    fifthResult = this.getFlightDuration().getText();
+                    fifthInt = regexDuration(fifthResult);
+                    System.out.println(fifthResult);
+                    this.clickCloseFlightPanel();
+                    if (fourthInt < fifthInt) {
+                        System.out.println("Lowest ordered correct: passed on second fourth check");
+                        scrollUp(scrollUpTimes);
+                        return true;
+                    }
+                }
+
         }
-        System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
-        scrollUp(scrollUpTimes);
-        return false;
+
+            System.out.println("Lowest ordered incorrect: didn't pass 1°_" + firstInt + " 2°_" + secondInt + " 3°_" + thirdInt + " 4°_" + fourthInt + " 5°_" + fifthInt);
+            scrollUp(scrollUpTimes);
+            return false;
+        }
     }
 
     /*---------Private utility methods---------------*/
@@ -339,16 +357,7 @@ public class FlightSearchPage extends BasePage{
             //select not found
             return 0;}
     }
-    private void scrollDown(int times){
-        for(int i = 0; i <= times; i++) {
-            driver.findElement(By.tagName("body")).sendKeys(Keys.DOWN);
-        }
-    }
-    public void scrollUp(int times){
-        for(int i = 0; i <= times; i++) {
-            driver.findElement(By.tagName("body")).sendKeys(Keys.UP);
-        }
-    }
+
 
 }
 

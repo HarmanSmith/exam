@@ -1,8 +1,12 @@
 package pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.ArrayList;
 
 public abstract class BasePage {
 
@@ -26,5 +30,20 @@ public abstract class BasePage {
         return this.wait;
     }
 
+    public void switchTabs(){
+        ArrayList<String> newTb = new ArrayList<String>(this.driver.getWindowHandles());
+        //switch to new tab
+        this.driver.switchTo().window(newTb.get(1));
+    }
 
+    protected void scrollDown(int times){
+        for(int i = 0; i <= times; i++) {
+            driver.findElement(By.tagName("body")).sendKeys(Keys.DOWN);
+        }
+    }
+    protected void scrollUp(int times){
+        for(int i = 0; i <= times; i++) {
+            driver.findElement(By.tagName("body")).sendKeys(Keys.UP);
+        }
+    }
 }

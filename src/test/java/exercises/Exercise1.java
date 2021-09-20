@@ -78,21 +78,28 @@ public class Exercise1 extends BaseTests {
         //flightSummaryPage.printSomethingDebug();
         assertTrue(flightSummaryPage.priceExists());
         System.out.println("Step6.a. complete");
-        assertTrue(flightSummaryPage.checkDepartureInformation());
-        assertTrue(flightSummaryPage.checkReturnInformation());
+        System.out.println("size is: "+flightSummaryPage.getFlightInfoSize());
+        assertTrue(flightSummaryPage.checkFlightInformation(0));
+        System.out.println("DeparturaInformationCorrect");
+        assertTrue(flightSummaryPage.checkFlightInformation(1));
+        System.out.println("ReturnInformationCorrect");
         System.out.println("Step6.b. complete");
-        //TODO: "Price guarantee" assert ??
-        //System.out.println("Step6.c. complete");
+        assertTrue(flightSummaryPage.checkPriceGuarantee());
+        System.out.println("Step6.c. complete");
         WhosTravellingPage whosTravellingPage = flightSummaryPage.clickCheckout();
-        System.out.println("STEP7");
+        System.out.println("STEP7 Complete");
         assertTrue(whosTravellingPage.checkLogo());
-
-        /*flightSearchPage.selectDropdown("Price (Highest)");//ejercicio no pide ordered by highest
-        //flightSearchPage.checkList(flightSearchPage);
-        assertTrue(flightSearchPage.checkOrderedHighest());
-        assertTrue(flightSearchPage.checkDuration(flightSearchPage));
-        assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));
-        assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 2));*/
+        System.out.println("Logo ok");
+        assertTrue(whosTravellingPage.checkCompleteBooking());
+        System.out.println("Booking Ok");
+        assertTrue(whosTravellingPage.checkWhosTravellingHeader());
+        System.out.println("Header Ok");
+        assertTrue(whosTravellingPage.checkYourPriceSummary());
+        System.out.println("Price summary ok");
+        assertTrue(whosTravellingPage.checkInsuranceCheckbox());
+        System.out.println("Insurance ok");
+        System.out.println("STEP8 Complete");
+        System.out.println("Exercise 1 complete");
     }
 
 }
