@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.FlightSearchPage;
 import pages.HotelsSearchPage;
+import pages.HotelsSummaryPage;
 
 import static org.testng.Assert.assertTrue;
 
@@ -46,9 +47,13 @@ public class Exercise2 extends BaseTests {
         //System.out.println(hotelsSearchPage.getDropdownText());
         hotelsSearchPage.selectDropdown("Price");
         waitMethod(5);
-        System.out.println(hotelsSearchPage.getListSize());
+        //System.out.println("Results loaded: "+hotelsSearchPage.getListSize());
         assertTrue(hotelsSearchPage.checkOrderedLowest());
         System.out.println("Step 4 complete");
+        //System.out.println("Stars :"+hotelsSearchPage.getStarsString(0)+" and "+ hotelsSearchPage.getStarsString(1));
+        HotelsSummaryPage hotelsSummaryPage = hotelsSearchPage.clickFirst3StarsHotel();
+        System.out.println("Step 5 complete");
+        //waitMethod(30);
 
     }
 }
