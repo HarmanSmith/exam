@@ -21,7 +21,8 @@ public class HotelsSummaryPage extends BasePage{
     WebElement hotelRating;
     @FindBy(xpath = "//span[@data-stid='price-lockup-text']")
     List<WebElement> priceCards;//price is in html text
-
+    @FindBy(xpath ="//button[@data-stid='submit-hotel-reserve']")
+    List<WebElement> reserveButtons;
 
     public boolean checkHotelName(String name){
         System.out.println(name + " and " + getWait().until(ExpectedConditions.visibilityOf(hotelName)).getText() );
@@ -65,6 +66,9 @@ public class HotelsSummaryPage extends BasePage{
             return true;
         }
         return false;
+    }
+    public void clickFirstRoom(){
+        getWait().until(ExpectedConditions.elementToBeClickable(reserveButtons.get(0))).click();
     }
 
 }

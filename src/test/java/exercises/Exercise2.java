@@ -20,7 +20,7 @@ public class Exercise2 extends BaseTests {
         homePage.clickFlights();
         homePage.clickHotels();
         assertTrue(homePage.travelersCheck());
-        System.out.println("Step1 complete");
+        System.out.println("-Step1 complete");
         //homePage.clickDepartureButton();
         //homePage.typeDeparture(origin);
         homePage.clickHotelsDestinationButton();
@@ -32,7 +32,7 @@ public class Exercise2 extends BaseTests {
         homePage.clickFlightsCalendarDayEnd_Exercise2();
         homePage.clickFlightsCalendarApply();
         HotelsSearchPage hotelsSearchPage = homePage.clickHotelsSearch();
-        System.out.println("Step2 complete");
+        System.out.println("-Step2 complete");
         assertTrue(hotelsSearchPage.checkLogo());
         System.out.println("logo ok");
         assertTrue(hotelsSearchPage.checkFilterArea());
@@ -43,29 +43,30 @@ public class Exercise2 extends BaseTests {
         System.out.println("dropdown ok");
         assertTrue(hotelsSearchPage.checkTravelersButton());
         System.out.println("travelers button ok");
-        System.out.println("Step 3 complete");
+        System.out.println("-Step 3 complete");
         //System.out.println(hotelsSearchPage.getDropdownText());
         hotelsSearchPage.selectDropdown("Price");
         waitMethod(5);
         //System.out.println("Results loaded: "+hotelsSearchPage.getListSize());
         assertTrue(hotelsSearchPage.checkOrderedLowest());
-        System.out.println("Step 4 complete");
+        System.out.println("-Step 4 complete");
         //System.out.println("Stars :"+hotelsSearchPage.getStarsString(0)+" and "+ hotelsSearchPage.getStarsString(1));
         String hotelName = hotelsSearchPage.getHotelName(hotelsSearchPage.findFirst3StarsHotel());
         int hotelPrice = hotelsSearchPage.getPriceForComparison(hotelsSearchPage.findFirst3StarsHotel());
         float hotelStars = hotelsSearchPage.getStarsFloat(hotelsSearchPage.getStarsString(hotelsSearchPage.findFirst3StarsHotel()));
         HotelsSummaryPage hotelsSummaryPage = hotelsSearchPage.clickFirst3StarsHotel();
-        System.out.println("Step 5 complete");
+        System.out.println("-Step 5 complete");
         hotelsSummaryPage.switchTabs();
-        System.out.println(hotelName);
-        System.out.println(hotelPrice);
-        System.out.println(hotelStars);
+        //System.out.println(hotelName);
+        //System.out.println(hotelPrice);
+        //System.out.println(hotelStars);
         assertTrue(hotelsSummaryPage.checkHotelName(hotelName));
         System.out.println("name ok");
         assertTrue(hotelsSummaryPage.checkHotelPrice(hotelPrice));
         System.out.println("price ok");
         assertTrue(hotelsSummaryPage.checkHotelStars(hotelStars));
         System.out.println("stars ok");
-        System.out.println("Step 6 complete");
+        System.out.println("-Step 6 complete");
+        hotelsSummaryPage.clickFirstRoom();
     }
 }

@@ -34,6 +34,10 @@ public class HotelsSearchPage extends BasePage{
     List<WebElement> buttonCards;
     @FindBy(xpath = "//ol[@class='results-list no-bullet']/li/h3")
     List<WebElement> hotelNames;
+    @FindBy(xpath = "//div[@class='uitk-text uitk-type-bold uitk-text-default-theme']")
+    WebElement sponsorDisclaimer;
+    @FindBy(xpath = "//span[@class='uitk-badge-text']")
+    List<WebElement> discountAvailableList;
 
     public boolean checkLogo(){
         return this.getWait().until(ExpectedConditions.visibilityOf(travelocityLogo)).isDisplayed();
@@ -49,6 +53,12 @@ public class HotelsSearchPage extends BasePage{
     }
     public boolean checkFilterArea(){
         return this.getWait().until(ExpectedConditions.visibilityOf(filterArea)).isDisplayed();
+    }
+    public boolean checkSponsorDisclaimer(){
+        return this.getWait().until(ExpectedConditions.visibilityOf(sponsorDisclaimer)).isDisplayed();
+    }
+    public boolean checkDiscountAvailable(){
+        return this.getWait().until(ExpectedConditions.visibilityOf(discountAvailableList.get(0))).isDisplayed();
     }
     public String getDropdownText(){
         //return driver.findElement(sortDropdown).getText();
