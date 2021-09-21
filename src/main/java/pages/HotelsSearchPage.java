@@ -32,6 +32,9 @@ public class HotelsSearchPage extends BasePage{
     List<WebElement> starsCards;
     @FindBy(xpath = "//a[@data-stid='open-hotel-information']")
     List<WebElement> buttonCards;
+    @FindBy(xpath = "//ol[@class='results-list no-bullet']/li/h3")
+    List<WebElement> hotelNames;
+
     public boolean checkLogo(){
         return this.getWait().until(ExpectedConditions.visibilityOf(travelocityLogo)).isDisplayed();
     }
@@ -60,6 +63,9 @@ public class HotelsSearchPage extends BasePage{
         return this.priceCards.size();
     }
 
+    public int getPriceForComparison(int index){
+        return getFlightPrice(getPriceString(index));
+    }
     private String getPriceString(int index){
         scrollDown(2);
         getWait().until(ExpectedConditions.visibilityOf(this.priceCards.get(index)));
@@ -69,16 +75,20 @@ public class HotelsSearchPage extends BasePage{
         return "0";}
     }
 
-    private String getStarsString(int index){
+    public String getStarsString(int index){
         getWait().until(ExpectedConditions.visibilityOf(this.starsCards.get(index)));
         return starsCards.get(index).getText();
     }
-    private float getStarsFloat(String puntaje){
+    public float getStarsFloat(String puntaje){
         String[] separacion = puntaje.split("/");
         float valor = Float.parseFloat(separacion[0]);
         return valor;
     }
-    private int findFirst3StarsHotel(){
+
+    public String getHotelName(int index){
+        return this.hotelNames.get(index).getText();
+    }
+    public int findFirst3StarsHotel(){
         float firstStars = getStarsFloat(getStarsString(0));
         if(firstStars < 3) {
             for (int i = 1; i < 15; i++) {
@@ -90,6 +100,7 @@ public class HotelsSearchPage extends BasePage{
     }
     public HotelsSummaryPage clickFirst3StarsHotel(){
         getWait().until(ExpectedConditions.visibilityOf(buttonCards.get(findFirst3StarsHotel()))).click();
+        //le pasamos datos del hotel seleccionado para comparar los asserts en la proxima pagina
         return new HotelsSummaryPage(this.driver);
     }
     private int getFlightPrice(String price){

@@ -51,9 +51,21 @@ public class Exercise2 extends BaseTests {
         assertTrue(hotelsSearchPage.checkOrderedLowest());
         System.out.println("Step 4 complete");
         //System.out.println("Stars :"+hotelsSearchPage.getStarsString(0)+" and "+ hotelsSearchPage.getStarsString(1));
+        String hotelName = hotelsSearchPage.getHotelName(hotelsSearchPage.findFirst3StarsHotel());
+        int hotelPrice = hotelsSearchPage.getPriceForComparison(hotelsSearchPage.findFirst3StarsHotel());
+        float hotelStars = hotelsSearchPage.getStarsFloat(hotelsSearchPage.getStarsString(hotelsSearchPage.findFirst3StarsHotel()));
         HotelsSummaryPage hotelsSummaryPage = hotelsSearchPage.clickFirst3StarsHotel();
         System.out.println("Step 5 complete");
-        //waitMethod(30);
-
+        hotelsSummaryPage.switchTabs();
+        System.out.println(hotelName);
+        System.out.println(hotelPrice);
+        System.out.println(hotelStars);
+        assertTrue(hotelsSummaryPage.checkHotelName(hotelName));
+        System.out.println("name ok");
+        assertTrue(hotelsSummaryPage.checkHotelPrice(hotelPrice));
+        System.out.println("price ok");
+        assertTrue(hotelsSummaryPage.checkHotelStars(hotelStars));
+        System.out.println("stars ok");
+        System.out.println("Step 6 complete");
     }
 }
