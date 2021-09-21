@@ -23,6 +23,7 @@ public class Exercise3 extends BaseTests {
         assertTrue(hotelsSearchPageUruguay.checkDiscountAvailable());
         System.out.println("Discount available");
         System.out.println("-Step 3 complete");
+        System.out.println("Exercise 3 complete");
 
     }
 }
