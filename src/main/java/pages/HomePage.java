@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -65,6 +66,23 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "(//div//button[contains(@data-stid,'apply-date-picker')])")
     WebElement flightsCalendarApply;
 
+    //Cruises
+    @FindBy(id ="cruise-destination")
+    WebElement cruiseDestination;
+    @FindBy(id ="d1-btn")
+    WebElement cruiseDepartureButton;
+    @FindBy(xpath="//button[@class='uitk-button uitk-button-medium uitk-button-only-icon uitk-flex-item uitk-button-paging'][1]")
+    WebElement cruisePreviousMonth;
+    @FindBy(xpath="//button[@class='uitk-button uitk-button-medium uitk-button-only-icon uitk-flex-item uitk-button-paging'][2]")
+    WebElement cruiseNextMonth;
+    @FindBy(xpath="//button[@class='uitk-date-picker-day uitk-new-date-picker-day'][1]")
+    WebElement cruiseSelectDay;
+    @FindBy(xpath="//button[@data-stid='apply-date-picker']")
+    WebElement cruiseConfirmDate;
+    @FindBy(xpath="//button[@data-testid='submit-button']")
+    WebElement cruiseSearch;
+
+
     //Other
     @FindBy(xpath = "//a[@href='#id-roundtrip-error']")
     WebElement dateErrorLink;
@@ -72,6 +90,7 @@ public class HomePage extends BasePage {
     WebElement dateReturningErrorText;
     @FindBy(id ="d1-error")
     WebElement dateHotelErrorText;
+
 
     //error messages
     public boolean getDateError(){
@@ -182,4 +201,26 @@ public class HomePage extends BasePage {
         this.getWait().until(ExpectedConditions.elementToBeClickable(this.hotelsDestinationBox)).sendKeys(destination + Keys.ENTER);
 
     }
+    public void cruiseSelectDropdown(String option){
+        System.out.println("Option: " + option);
+        Select dropdownElement = new Select(this.cruiseDestination);
+        dropdownElement.selectByVisibleText(option);
+    }
+    public void clickCruiseDeparture(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.cruiseDepartureButton)).click();
+    }
+    public void clickCruiseNextMonth(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.cruiseNextMonth)).click();
+    }
+    public void clickCruiseDay(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.cruiseSelectDay)).click();
+    }
+    public void clickCruiseConfirmDate(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.cruiseConfirmDate)).click();
+    }
+    public CruiseSearchPage clickCruiseSearch(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(this.cruiseSearch)).click();
+        return new CruiseSearchPage(this.driver);
+    }
+
 }
