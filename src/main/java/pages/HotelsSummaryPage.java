@@ -21,8 +21,12 @@ public class HotelsSummaryPage extends BasePage{
     WebElement hotelRating;
     @FindBy(xpath = "//span[@data-stid='price-lockup-text']")
     List<WebElement> priceCards;//price is in html text
-    @FindBy(xpath ="//button[@data-stid='submit-hotel-reserve']")
-    List<WebElement> reserveButtons;
+    //@FindBy(xpath ="//button[@data-stid='sticky-button']")
+    //@FindBy(xpath ="//button[@data-stid='submit-hotel-reserve'][1]")
+    @FindBy(xpath ="/html/body/div[2]/div[1]/div/div/main/div/div/div[1]/section/div[1]/div[4]/div/span/div[3]/div/div[1]/div[2]/div/div/div[2]/div[2]/button")
+    WebElement reserveButton;
+    @FindBy (xpath = "/html/body/div[2]/div[1]/div[3]/div[2]/div/div/section/div[1]/div/div[2]/div[2]/form/button")
+    WebElement payNow;
 
     public boolean checkHotelName(String name){
         System.out.println(name + " and " + getWait().until(ExpectedConditions.visibilityOf(hotelName)).getText() );
@@ -67,8 +71,12 @@ public class HotelsSummaryPage extends BasePage{
         }
         return false;
     }
-    public HotelsCheckoutPage clickFirstRoom(){
-        getWait().until(ExpectedConditions.elementToBeClickable(reserveButtons.get(0))).click();
+    public void clickFirstRoom(){
+        scrollDown(20);
+        this.reserveButton.click();
+    }
+    public HotelsCheckoutPage clickPay(){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(payNow)).click();
         return new HotelsCheckoutPage(this.driver);
     }
 

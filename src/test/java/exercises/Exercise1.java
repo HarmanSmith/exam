@@ -40,11 +40,11 @@ public class Exercise1 extends BaseTests {
         flightSearchPage.selectDropdown("Price (Lowest)");
         assertTrue(flightSearchPage.checkOrderedLowest());//Step 2.a.
         System.out.println("Step2.a. complete");
-        assertTrue(flightSearchPage.checkSelectButton(flightSearchPage));//Step2.b.
+        assertTrue(flightSearchPage.checkSelectButton());//Step2.b.
         System.out.println("Step2.b. complete");
-        assertTrue(flightSearchPage.checkDuration(flightSearchPage));//Step2.c.
+        assertTrue(flightSearchPage.checkDuration());//Step2.c.
         System.out.println("Step2.c. complete");
-        assertTrue(flightSearchPage.checkBaggage(flightSearchPage, 1)); //Step2.d.
+        assertTrue(flightSearchPage.checkBaggage()); //Step2.d.
         System.out.println("Step2.d. complete");
         //---Step2.Complete---
         //---Step3.Start---

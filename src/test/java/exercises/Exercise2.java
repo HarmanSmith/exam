@@ -68,7 +68,8 @@ public class Exercise2 extends BaseTests {
         assertTrue(hotelsSummaryPage.checkHotelStars(hotelStars));
         System.out.println("stars ok");
         System.out.println("-Step 6 complete");
-        HotelsCheckoutPage hotelsCheckoutPage = hotelsSummaryPage.clickFirstRoom();
+        hotelsSummaryPage.clickFirstRoom();
+        HotelsCheckoutPage hotelsCheckoutPage = hotelsSummaryPage.clickPay();
         assertTrue(hotelsCheckoutPage.checkHotelPrice());
         System.out.println("HotelPrice present");
         assertTrue(hotelsCheckoutPage.checkHotelRating());

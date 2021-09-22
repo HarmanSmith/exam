@@ -23,15 +23,9 @@ public class FlightSearchPage extends BasePage{
 
     @FindBy (id = "listings-sort")
     WebElement sortDropdown;
-
     @FindBy (xpath = "(//button[contains(@class,'uitk-card-link')])")
     List<WebElement> flightResults;
-
-    /*@FindBy (xpath = "//button[@data-test-id='fare-type-select']")
-    List<WebElement> flightPrice;*/
-
     @FindBy (css = "[data-test-id='details-and-fares-footer'] .uitk-lockup-price") // se puede usar css
-    //@FindBy (xpath = "//div[contains(@class, 'left-align')]/section/span[contains(@class, 'lockup')]")
     WebElement flightPrice;
     @FindBy (xpath = "//button[@data-icon='tool-close']")
     WebElement closeFlightPanel;
@@ -39,12 +33,13 @@ public class FlightSearchPage extends BasePage{
     WebElement flightDuration;
     @FindBy (xpath = "//button[@data-test-id='select-button']")
     WebElement flightSelectButton;
-    @FindBy (xpath = "//button[contains(@data-test-id, 'select-button')]")
-    WebElement flightSelectButton2;
     @FindBy (xpath = "//td[@class='uitk-table-react-cell uitk-spacing uitk-spacing-padding-blockstart-three uitk-table-react-cell-border-none uitk-table-react-cell-textalign-right uitk-table-react-cell-verticalalign-top']//span[@class='uitk-text uitk-type-300']")
     List<WebElement> flightBaggageButton;
+    @FindBy(xpath="//div[@data-test-id='bag-fee-info']/div[@class='uitk-text uitk-type-200'][1]")
+    WebElement flightBaggageDisclaimer;
     @FindBy (xpath = "//a[contains(@data-test-id, 'forcedChoiceNoThanks')]")
     WebElement noThanksButton;
+
     /*---------------Interactions with website-------------------*/
     public void selectDropdown(String option){
         System.out.println("Option: " + option);
@@ -53,7 +48,12 @@ public class FlightSearchPage extends BasePage{
         //return new FlightSearchPage(this.driver);
     }
     public boolean clickResult(int index){
-        this.getWait().until(ExpectedConditions.visibilityOfAllElements(this.flightResults));
+        //this.getWait().until(ExpectedConditions.visibilityOfAllElements(this.flightResults));
+        try{
+            Thread.sleep(5000);
+        }catch(Exception e){
+            System.out.println("Algo ocurrió intentando esperar");
+        }
         if(this.flightResults.size()>=index){
             this.getWait().until(ExpectedConditions.elementToBeClickable(flightResults.get(index))).click();
             //return this.getWait().until(ExpectedConditions.visibilityOf(this.flightSelectButton)).isDisplayed();
@@ -61,9 +61,6 @@ public class FlightSearchPage extends BasePage{
         }else{
             return false;
         }
-    }
-    public void clickResult2(int index){
-        this.getWait().until(ExpectedConditions.elementToBeClickable(flightResults.get(index))).click();
     }
 
     public void clickSelectFlightButton(){
@@ -191,11 +188,11 @@ public class FlightSearchPage extends BasePage{
         scrollUp(scrollUpTimes);
         return false;
     }
-    public boolean checkDuration(FlightSearchPage flightSearchPage){
+    public boolean checkDuration(){
         int contador = 0;
         for(int i = 0; i < 6; i++){
-            flightSearchPage.clickResult(i);
-            contador = contador + durationAdd(flightSearchPage);
+            this.clickResult(i);
+            contador = contador + durationAdd();
             clickCloseFlightPanel();
         }
         if(contador >= 5)
@@ -207,11 +204,11 @@ public class FlightSearchPage extends BasePage{
             return false;
         }
     }
-    public boolean checkSelectButton(FlightSearchPage flightSearchPage){
+    public boolean checkSelectButton(){
         int contador = 0;
         for(int i = 0; i < 6; i++){
-            flightSearchPage.clickResult(i);
-            contador = contador + selectAdd(flightSearchPage);
+            this.clickResult(i);
+            contador = contador + selectAdd();
             clickCloseFlightPanel();
         }
         if(contador >= 5)
@@ -224,11 +221,11 @@ public class FlightSearchPage extends BasePage{
             scrollUp(scrollUpTimes);
             return false;}
     }
-    public boolean checkBaggage(FlightSearchPage flightSearchPage, int option){
+    public boolean checkBaggage(){
         int contador = 0;
         for(int i = 0; i < 6; i++) {
-            flightSearchPage.clickResult(i);
-            contador = contador + baggageAdd(flightSearchPage, 1); //for now; only checks first baggage
+            this.clickResult(i);
+            contador = contador + baggageAdd(0); //for now; only checks first baggage
             clickCloseFlightPanel();
         }
         if (contador >= 5)
@@ -335,22 +332,22 @@ public class FlightSearchPage extends BasePage{
         }
         return result;
     }
-    private int durationAdd(FlightSearchPage flightSearchPage){
+    private int durationAdd(){
         //System.out.println("Duration text: " + flightSearchPage.getFlightDuration().getText());
-        if(flightSearchPage.getFlightDuration().isDisplayed()){
+        if(this.getFlightDuration().isDisplayed()){
             return 1;
         }else{return 0;}
     }
-    private int selectAdd(FlightSearchPage flightSearchPage){
-        if(flightSearchPage.getFlightSelectButton().isDisplayed()){
+    private int selectAdd(){
+        if(this.getFlightSelectButton().isDisplayed()){
             //System.out.println("Select button found");
             return 1;
         }else{
             //System.out.println("select not found");
             return 0;}
     }
-    private int baggageAdd(FlightSearchPage flightSearchPage, int index){
-        if(flightSearchPage.getFlightBaggageButton(index).isDisplayed()){
+    private int baggageAdd(int index){
+        if(this.getWait().until(ExpectedConditions.visibilityOf(flightBaggageDisclaimer)).isDisplayed()){
             //Select button found
             return 1;
         }else{
@@ -370,5 +367,34 @@ public class FlightSearchPage extends BasePage{
     /*Select and show fare information for JetBlue Airways flight, departing at 1:08pm from Las Vegas, arriving at 2:15pm
      in Los Angeles, Priced at $91 Roundtrip per traveler.  1 hour 7 minutes total travel time, Nonstop, 2 cleaning and
      safety practice.*/
+
+//@FindBy (xpath = "//div[contains(@class, 'left-align')]/section/span[contains(@class, 'lockup')]")
+/*@FindBy (xpath = "//button[@data-test-id='fare-type-select']")
+    List<WebElement> flightPrice;*/
+
+/*@FindBy (xpath = "//button[contains(@data-test-id, 'select-button')]")
+    WebElement flightSelectButton2;*/
+
+/*public void clickResult2(int index){
+        this.getWait().until(ExpectedConditions.elementToBeClickable(flightResults.get(index))).click();
+    }*/
+
+/* public boolean checkBaggage(){
+
+        int contador = 0;
+        for(int i = 0; i < 6; i++) {
+            this.clickResult(i);
+            contador = contador + baggageAdd(0); //for now; only checks first baggage
+            clickCloseFlightPanel();
+        }
+        if (contador >= 5)
+        {
+            System.out.println("Baggage OK - 2");
+            scrollUp(scrollUpTimes);
+            return true;
+        } else {
+            scrollUp(scrollUpTimes);
+            return false;}
+    }*/
 
 //----------------------------------------------------------------------------------------------------------------------
