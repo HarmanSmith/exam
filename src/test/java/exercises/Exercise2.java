@@ -4,6 +4,7 @@ import base.BaseTests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.FlightSearchPage;
+import pages.HotelsCheckoutPage;
 import pages.HotelsSearchPage;
 import pages.HotelsSummaryPage;
 
@@ -67,6 +68,17 @@ public class Exercise2 extends BaseTests {
         assertTrue(hotelsSummaryPage.checkHotelStars(hotelStars));
         System.out.println("stars ok");
         System.out.println("-Step 6 complete");
-        hotelsSummaryPage.clickFirstRoom();
+        HotelsCheckoutPage hotelsCheckoutPage = hotelsSummaryPage.clickFirstRoom();
+        assertTrue(hotelsCheckoutPage.checkHotelPrice());
+        System.out.println("HotelPrice present");
+        assertTrue(hotelsCheckoutPage.checkHotelRating());
+        System.out.println("HotelRating present");
+        assertTrue(hotelsCheckoutPage.checkCheckInTitle());
+        System.out.println("HotelCheckin present");
+        assertTrue(hotelsCheckoutPage.checkRoomCount());
+        System.out.println("HotelRoomCount present");
+        assertTrue(hotelsCheckoutPage.checkCompleteBookingButton());
+        System.out.println("Booking button present");
+        System.out.println("Exercise 2 complete");
     }
 }

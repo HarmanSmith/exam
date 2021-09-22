@@ -67,8 +67,9 @@ public class HotelsSummaryPage extends BasePage{
         }
         return false;
     }
-    public void clickFirstRoom(){
+    public HotelsCheckoutPage clickFirstRoom(){
         getWait().until(ExpectedConditions.elementToBeClickable(reserveButtons.get(0))).click();
+        return new HotelsCheckoutPage(this.driver);
     }
 
 }

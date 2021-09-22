@@ -17,9 +17,13 @@ public class CruiseSearchPage extends BasePage {
     WebElement filterByHeader;
     /*@FindBy (xpath = "//fieldset[@class='desktop-filter-container']")
     List<WebElement> filterFramesList;*/
-    @FindBy (id= "main-results")
-    WebElement resultFrame;
+/*    @FindBy (id= "main-results")
+    WebElement resultFrame;*/
     //@FindBy(id = "length-15-ember874-label")
+    //@FindBy(id = "length-10-14-ember8362")
+    //@FindBy(xpath="//label[contains(@for, 'length-10-14-ember866')]/input[contains(@aria-labelledby, 'length-10-14')]")
+    //@FindBy(xpath="//input[contains(@name,'length-10-14')]")
+    //@FindBy(xpath = "/input[contains(@id,'length-10-14-ember866')]")
     @FindBy (xpath = "/html/body/div[2]/div[2]/div/div[3]/div[5]/aside/div/div/fieldset[2]/div/div/div/form/div/div[4]/div/label/input")
     WebElement filter10to14nights;
     //private By filter10to14nights = By.id("length-15-ember874-label");

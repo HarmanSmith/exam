@@ -35,14 +35,16 @@ public class Exercise5 extends BaseTests {
         assertTrue(cruiseSearchPage.checkCruiseDiscounts());
         System.out.println("Step 6 ok");
         cruiseSearchPage.clickSortDates();
-        waitMethod(5);
+        waitMethod(2);
         CruiseCabinPage cruiseCabinPage = cruiseSearchPage.clickCruiseCard(0);
+        cruiseCabinPage.switchTabs();
         System.out.println("Step 7 ok");
         assertTrue(cruiseCabinPage.checkShipNameIsPresent());
-        System.out.println("shipn name is present");
+        System.out.println("ship name is present");
         assertTrue(cruiseCabinPage.checkShipDepartureIsPresent());
         System.out.println("Ship departure is present");
         assertTrue(cruiseCabinPage.checkShipReturnIsPresent());
+        System.out.println("Ship return is present");
         System.out.println("Step 8 ok");
         System.out.println("Exercise 5 completed");
     }
