@@ -5,6 +5,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 
@@ -46,4 +48,11 @@ public abstract class BasePage {
             driver.findElement(By.tagName("body")).sendKeys(Keys.UP);
         }
     }
+    /*protected void clickElement(By locator) {
+        waitForElementToBeClickable(locator);
+        driver.findElement(locator).click();
+    }
+    private void waitForElementToBeClickable(By locator) {
+        getWait().until(ExpectedConditions.elementToBeClickable(locator));
+    }*/
 }
